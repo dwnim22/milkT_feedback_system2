@@ -1,7 +1,7 @@
 {
   "name": "밀크T 고객센터 불만 감지 시스템",
   "short_name": "불만감지",
-  "start_url": "/milkT_feedback_system/",
+  "start_url": "/milkT_feedback_system2/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#003366",

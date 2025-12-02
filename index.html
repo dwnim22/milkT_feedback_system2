@@ -2,62 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>밀크티 불만감지 및 상담유형 추천 시스템</title>
+    <title>밀크티 고객센터 불만 감지 시스템</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
-
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #f4f6f8;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
         .container {
-            width: 90%;
-            max-width: 1200px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 95vh;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         header {
             background: linear-gradient(135deg, #003366, #00509e);
             color: white;
             padding: 20px;
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: bold;
             border-radius: 0 0 12px 12px;
             text-align: center;
         }
-        .main-content {
-            display: flex;
-            flex: 1;
-            padding: 20px;
-            gap: 20px;
-            min-height: 0;
-        }
-        .left-panel, .right-panel {
-            display: flex;
-            flex-direction: column;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            background: #fdfdfd;
-        }
-        .left-panel {
-            flex: 2;
-        }
-        .right-panel {
-            flex: 1;
-            background-color: #f9f9f9;
+        main {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-top: 20px;
         }
         .notice {
             background-color: #f9fafb;
@@ -65,18 +38,9 @@
             padding: 15px 20px;
             margin-bottom: 20px;
             font-size: 0.95em;
-            line-height: 1.8;
-        }
-        .panel-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #0056b3;
-            padding-bottom: 5px;
+            line-height: 1.6;
         }
         .input-area {
-            flex: 1;
             width: 100%;
             min-height: 150px;
             padding: 15px;
@@ -86,162 +50,60 @@
             border-radius: 8px;
             background: white;
             outline: none;
-            overflow-y: auto;
             white-space: pre-wrap;
             word-break: break-word;
-            transition: border-color 0.3s;
         }
-        .result-box {
-            margin-top: 10px;
-            padding: 10px;
-            border-left: 5px solid;
-            display: none;
-            font-weight: bold;
-        }
-        .result-box.complaint {
-            color: #c0392b;
-            background-color: #fff0f0;
-            border-color: #c0392b;
-        }
-        .result-box.normal {
-            color: #2e7d32;
-            background-color: #e6f4ea;
-            border-color: #2e7d32;
-        }
-        .keywords-box {
-            margin-top: 10px;
-            padding: 10px;
+        .result {
+            margin-top: 20px;
+            padding: 15px;
             border-radius: 8px;
-            border: 1px solid #ddd;
-            display: none;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-        .keywords-title {
-            font-size: 1em;
             font-weight: bold;
-            color: #000;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
+            font-size: 1em;
+            display: none;
         }
-        .keywords-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+        .complaint {
+            background-color: #fff0f0;
+            border: 1px solid #c0392b;
+            color: #c0392b;
+        }
+        .normal {
+            background-color: #e6f4ea;
+            border: 1px solid #2e7d32;
+            color: #1b5e20;
+        }
+        .keywords {
+            margin-top: 10px;
+            font-size: 0.95em;
         }
         .keyword {
-            background-color: rgba(255, 0, 0, 0.1);
-            color: red;
+            display: inline-block;
+            background-color: #ffcccc;
+            color: #900;
             padding: 4px 8px;
-            border: none;
-            border-radius: 5px;
-            font-size: 0.9em;
+            margin: 4px;
+            border-radius: 4px;
             font-weight: normal;
             cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .keyword:hover {
-            background-color: rgba(255, 0, 0, 0.2);
+            font-size: 0.95em;
         }
         .keyword-desc {
             margin-top: 10px;
             padding: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
+            background: #f1f1f1;
+            border-radius: 6px;
             font-size: 0.9em;
             display: none;
         }
-        
-        .recommendation-list {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .recommendation-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 4px 8px;
-            margin: 4px;
-            background-color: #eaf3fd;
-            border: 1px solid #cce5ff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            transition: all 0.2s ease-in-out;
-        }
-        .recommendation-item-line {
-            width: 5px;
-            height: 100%;
-            background-color: #0056b3;
-            border-radius: 2px;
-            margin-right: 15px;
-        }
-        .recommendation-item-content {
-            flex-grow: 1;
-        }
-        .recommendation-title {
-            font-size: 1em;
+        #securityStatus {
+            margin-top: 30px;
             font-weight: bold;
-            color: #000;
-            margin-bottom: 5px;
-        }
-        .match-info {
-            font-size: 0.9em;
-            color: #555;
-            line-height: 1.4;
-        }
-        .match-info strong {
-            color: #0056b3;
-        }
-        
-        .security-banner {
+            font-size: 0.85em;
+            text-align: center;
             background-color: #003366;
             color: white;
-            padding: 10px 20px;
-            font-size: 0.9em;
-            font-weight: bold;
-            text-align: center;
+            padding: 12px 20px;
             border-radius: 0 0 12px 12px;
-            margin: 0 20px 20px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            position: relative;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: calc(100% - 40px);
-            box-sizing: border-box;
         }
-        .container > .security-banner {
-            border-radius: 0 0 12px 12px;
-            margin-bottom: 0;
-        }
-
-        .initial-message {
-            text-align: center;
-            color: #777;
-            font-size: 0.9em;
-            padding-top: 20px;
-        }
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
-            .security-banner {
-                margin: 0 20px 20px 20px;
-                width: calc(100% - 40px);
-            }
-        }
-        [data-placeholder]:empty:before {
-            content: attr(data-placeholder);
-            color: #aaa;
-        }
-
-        /* --- 추가된 PWA 설치 팝업 스타일 --- */
         #installPopup {
             display: none;
             position: fixed;
@@ -270,40 +132,46 @@
         #cancelInstall {
             background: #ccc;
         }
+        .type-recommendation {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e6f7ff;
+            border: 1px solid #1890ff;
+        }
+        .type-recommendation h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+            color: #00509e;
+        }
+        .type-recommendation p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>밀크티 불만감지 및 상담유형 추천 시스템</header>
-        <div class="main-content">
-            <div class="left-panel">
-                <div class="notice">
-                    상담 내용을 입력하면, 불만으로 의심되는 표현을 실시간 감지하고 유사한 상담유형을 추천합니다.<br>
-                    해당 결과를 참고하여 <strong>VOC 구분 및 상담유형 선택</strong>을 합니다.<br>
-                    <strong>이 결과는 참고용이며, 최종 판단은 상담사가 직접 해야합니다.</strong>
-                </div>
-                <div id="inputArea" class="input-area" contenteditable="true" spellcheck="false" placeholder="상담 내용을 입력하세요."></div>
+        <header>밀크티 고객센터 불만 감지 시스템</header>
+        <main>
+            <div class="notice">
+                상담 내용을 입력하면, 불만으로 의심되는 표현과 함께 <br>
+                가장 관련성 높은 <strong>상담 유형(VOC)</strong>을 추천해 드립니다.
             </div>
 
-            <div class="right-panel">
-                <div class="panel-title">상담 유형 추천</div>
-                <div id="recommendationList" class="recommendation-list">
-                    <div class="initial-message">내용을 입력하면<br>추천 유형이 나타납니다.</div>
-                </div>
+            <div id="inputArea" class="input-area" contenteditable="true" spellcheck="false"></div>
 
-                <div class="panel-title" style="margin-top: 20px;">불만 감지 및 키워드</div>
-                <div id="resultBox" class="result-box"></div>
-                <div id="keywordsBox" class="keywords-box">
-                    <div id="keywordsTitle" class="keywords-title"></div>
-                    <div id="keywordList" class="keywords-list"></div>
-                    <div id="keywordDesc" class="keyword-desc"></div>
-                </div>
+            <div id="resultBox" class="result"></div>
+            <div id="keywordList" class="keywords"></div>
+            <div id="keywordDesc" class="keyword-desc"></div>
+            
+            <div id="typeRecommendationBox" class="type-recommendation" style="display:none;">
+                <h3>추천 상담 유형 (상위 3개)</h3>
+                <div id="recommendationList"></div>
             </div>
-        </div>
-        
-        <div id="securityBanner" class="security-banner">
-            🔒 보안 상태: 안전 — 외부 전송 없음
-        </div>
+        </main>
+
+        <div id="securityStatus">🔒 보안 상태: 안전 — 외부 전송 없음</div>
     </div>
 
     <div id="installPopup">
@@ -315,19 +183,20 @@
     <script>
         const inputArea = document.getElementById('inputArea');
         const resultBox = document.getElementById('resultBox');
-        const recommendationList = document.getElementById('recommendationList');
-        const initialMessage = document.querySelector('.initial-message');
-        const keywordsBox = document.getElementById('keywordsBox');
-        const keywordsTitle = document.getElementById('keywordsTitle');
         const keywordList = document.getElementById('keywordList');
         const keywordDescBox = document.getElementById('keywordDesc');
-        const securityBanner = document.getElementById('securityBanner');
+        const typeRecommendationBox = document.getElementById('typeRecommendationBox');
+        const recommendationList = document.getElementById('recommendationList');
 
+        // 엑셀 파일에서 추출한 키워드 데이터 (불만 감지용)
         const complaintKeywords = [
-            "불만", "불쾌", "항의", "짜증", "실망", "불친절", "기분 나빴", "언짢", "무례", "부당",
-            "기분 상했", "강성", "신고", "경찰", "소보원", "소비자보호원", "소비자 보호원",
+            "불만", "불쾌", "항의", "짜증", "실망", "불친절",
+            "기분 나빴", "언짢", "무례", "부당", "기분 상했", "강성",
+            "신고", "경찰", "소보원", "소비자보호원", "소비자 보호원",
             "욕설", "최악", "법적대응"
         ];
+
+        // (유지) 불만 키워드 설명
         const keywordDescriptions = {
             "불만": "서비스나 제품에 대한 전반적인 불만 표현입니다.",
             "불쾌": "고객이 기분이 상하거나 불쾌감을 느낀 상황입니다.",
@@ -351,129 +220,6 @@
             "법적대응": "법적 절차를 진행하겠다는 의사 표현입니다."
         };
 
-        const 상담유형데이터 = `상담유형(대),상담유형(중),키워드1,키워드2,키워드3,키워드4,키워드5,키워드6,키워드7,키워드8,키워드9,키워드10
-교사관련,관리교사,교사,선생,관리,,,,,,,
-교사관련,상담교사,교사,선생,상담,,,,,,,
-교사관련,지사(홍보)교사,교사,선생,지사,홍보,,,,,
-원격요청,구성품,원격,구성품,키보드,펜,,,,,
-원격요청,학습기기,원격,기기,,,,,,,,
-원격요청,학습환경,원격,환경,와이파이,WIFI,,,,,
-원격요청,예약확인/변경/취소,원격,예약,확인,변경,취소,,,,
-원격요청,프리패스원격,원격,프리패스,,,,,,,,
-결제관련,결제요청및변경,결제,요청,변경,즉시,계좌,,,,,
-결제관련,결제확인,결제,확인,문의,증명,,,,,,
-결제관련,결제오류,결제,오류,이중결제,,,,,,,
-기기사용관련,WIFI및설치,기기,WIFI,와이파이,공유기,핫스팟,,,,
-기기사용관련,구성품관련,기기,구성품,키보드,펜,,,,,
-기기사용관련,기기인증초기화,기기,인증,로그인,초기화,,,,,
-기기사용관_학습기기관련,기기,문의,업데이트,최적화,,,,,
-기기사용관련,공장초기화,기기,공장초기화,기기초기화,초기화,,,,,
-AS관련,AS대행및발송,AS,대행,대체기기,회수,,,,,
-AS관련,구성품AS,AS,구성품,키보드,펜,,,,,
-AS관련,AS관련취소,AS,대행,취소,,,,,,
-AS관련,불량판정서기기교체,AS,불량,판정서,팩스,,,,,
-AS관련,삼성AS센터관련,AS,삼성,확인서,,,,,,
-AS관련,기기AS관련,AS,기기,점검,,,,,,
-개인정보관련,ID/비번문의,개인정보,ID,아이디,비번,비밀번호,암호,패스워드,,
-개인정보관련,정보확인및변경,개인정보,확인,변경,주소,연락처,번호,,,
-개인정보관련,계정생성관련,개인정보,계정,생성,아이디,ID,로그인,,,
-개인정보관련,탈퇴문의,개인정보,탈퇴,삭제,,,,,,
-개인정보관련,동의정보/수신거부,개인정보,동의,거부,삭제,탈퇴,마케팅,,,
-장애관련,장애재인입,장애,오류,재인입,,,,,
-장애관련,서버장애,장애,오류,서버,,,,,
-장애관련,런처장애,장애,오류,런처,,,,,
-장애관련,기타서비스장애,장애,오류,서비스,,,,,
-장애관련,타학교급장애,장애,오류,타학교,,,,,
-이벤트관련,학습이벤트,이벤트,학습,설명회,,,,,
-이벤트관련,가입및체험이벤트,이벤트,가입,체험,상품권,혜택,,,,
-이벤트관련,친구추천,이벤트,친구,지인,추천,상품권,,,,
-기타,기문의OUT콜,OUT,아웃,,,,,,
-기타,타학교급인입,타학교,아이,초등,중고등,인입,,,,
-기타,그룹사서비스,그룹사,교과서,,,,,,
-기타,마케팅/제휴/홍보,제휴,마케팅,홍보,광고,,,,,
-기타,단선/오인입/연락요청,단선,오인입,연락요청,미확인,,,,
-기타,타부서업무문의,타부서,공모전,,,,,,
-기타,상담오등록,오등록,상담,,,,,,
-기타,이전상담사이관,이전상담사,상담사,요청,전달,,,,
-기타,고객센터관련,고객센터,,,,,,,,
-기타,(원격)부재,원격,부재,,,,,,
-기타,(원격)원격중,원격,원격중,,,,,,
-기타,밀크T아이(런처),런처,밀크T아이,,,,,,
-기타,응대불가(욕설),응대불가,욕설,,,,,,
-화상코치,시간문의및변경,화상,맞춤톡쌤,시간,문의,,,,
-화상코치,입장방법및오류,화상,초대,,,,,,
-화상코치,참여불가,화상,참여,불가,무관리,,,,
-배송관련,기기및구성품배송,배송,기기,체험기기,,,,,
-배송관련,전용교재배송,배송,교재,전용교재,,,,,
-배송관련,판촉물배송,배송,판촉물,사은품,,,,,
-배송관련,이벤트상품배송,배송,이벤트,카메라,상품,,,,
-회수관련,회수요청,회수,체험기기,기기,,,,,
-회수관련,회수중복및지연,회수,중복,지연,,,,,
-회수관련,회수일반문의,회수,문의,,,,,,
-회수관련,회수정보변경,회수,회수지,주소지,주소,번호,,,,
-취소/환불관련,문의-처리진행상황,해지,취소,환불,문의,처리,상황,,,
-취소/환불관련,문의-학습거부/시간부족,해지,취소,환불,문의,시간,,,,
-취소/환불관련,문의-개인사정,해지,취소,환불,문의,사정,,,,
-취소/환불관련,문의-학습변경(온라인),해지,취소,환불,문의,변경,,,,
-취소/환불관련,문의-학습변경(오프라인),해지,취소,환불,문의,변경,,,,
-취소/환불관련,문의-콘텐츠/서비스,해지,취소,환불,문의,콘텐츠,서비스,,,
-취소/환불관련,문의-학습전용기기,해지,취소,환불,문의,기기,,,,
-취소/환불관련,문의-효과없음,해지,취소,환불,문의,효과,,,,
-취소/환불관련,문의-관리(자기주도),해지,취소,환불,문의,관리,자기주도,,,
-취소/환불관련,문의-기타,해지,취소,환불,문의,,,,,
-취소/환불관련,요청-학습거부/시간부족,해지,취소,환불,요청,거부,시간,,,
-취소/환불관련,요청-개인사정,해지,취소,환불,요청,사정,,,,
-취소/환불관련,요청-학습변경(온라인),해지,취소,환불,요청,변경,,,,
-취소/환불관련,요청-학습변경(오프라인),해지,취소,환불,요청,변경,,,,
-취소/환불관련,요청-콘텐츠/서비스,해지,취소,환불,요청,콘텐츠,서비스,,,
-취소/환불관련,요청-학습전용기기,해지,취소,환불,요청,기기,,,,
-취소/환불관련,요청-효과없음,해지,취소,환불,요청,효과,,,,
-취소/환불관련,요청-관리(자기주도),해지,취소,환불,요청,자기주도,,,,
-취소/환불관련,요청-기타,해지,취소,환불,요청,,,,,
-취소/환불관련,문의-해지절차/금액,해지,취소,환불,문의,해지,금액,비용,,
-서비스관련,밀크T나가기,밀크T,밀크티,나가기,,,,,
-서비스관련,학습관련,학습,문의,안내,,,,,
-서비스관련,학습기간,학습,문의,만료,기간,약정,,,
-서비스관련,쿠폰인증문의,쿠폰,지니마켓,포인트,상품권,,,,
-서비스관련,쉬는시간및마켓T문의,쉬는시간,지니마켓,간식타임,기프티콘,컵,CUP,,,
-서비스관련,컨텐츠오류,컨텐츠,콘텐츠,오류,에러,,,,
-서비스관련,프리패스,프리패스,프리패스,,,,,,
-서비스관련,메타서비스,마이룸,루비,아이템,,,,,
-북클럽,B 취소/환불 요청,북클럽,해지,환불,,,,
-북클럽,B 맛보기문의,북클럽,체험,,,,,,
-북클럽,B 상품문의,북클럽,가입,상품,,,,
-북클럽,B 티스푼,북클럽,티스푼,,,,,,
-북클럽,B 학습관련,북클럽,학습,문의,,,,
-북클럽,B 학습기간,북클럽,기간,약정,,,,
-북클럽,B 쉬는시간문의,북클럽,쉬는시간,,,,,,
-북클럽,B 책놀이터문의,북클럽,책놀이터,,,,,,
-북클럽,B 컨텐츠오류,북클럽,콘텐츠,오류,에러,,,,
-가입/체험관련,상품및가입문의,체험,가입,문의,상담,,,,
-가입/체험관련,무료체험문의,체험,무료체험,,,,,,
-가입/체험관련,무료체험취소요청,체험,취소,요청,,,,,`;
-
-        const parsedData = 상담유형데이터.split('\n').slice(1).map(line => {
-            const parts = line.split(',');
-            const allKeywords = parts.slice(2).filter(k => k.trim() !== '');
-            return {
-                mainType: parts[0],
-                subType: parts[1],
-                allKeywords: allKeywords
-            };
-        });
-
-        const totalDocuments = parsedData.length;
-        const allUniqueWords = [...new Set(parsedData.flatMap(doc => doc.allKeywords))];
-        const documentFrequency = {};
-        allUniqueWords.forEach(word => {
-            documentFrequency[word] = parsedData.filter(doc => doc.allKeywords.includes(word)).length;
-        });
-
-        const idfScores = {};
-        allUniqueWords.forEach(word => {
-            idfScores[word] = Math.log(totalDocuments / (documentFrequency[word] || 1));
-        });
-
         let isComposing = false;
         
         inputArea.addEventListener('compositionstart', () => { isComposing = true; });
@@ -481,106 +227,146 @@ AS관련,기기AS관련,AS,기기,점검,,,,,,
             isComposing = false;
             processInput();
         });
-        
-        inputArea.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const selection = window.getSelection();
-                if (selection.rangeCount > 0) {
-                    const range = selection.getRangeAt(0);
-                    
-                    // 현재 커서 위치에 개행 문자 삽입
-                    const textNode = document.createTextNode('\n');
-                    range.deleteContents();
-                    range.insertNode(textNode);
-                    
-                    // 커서를 새로 삽입된 개행 문자 뒤로 이동
-                    const newRange = document.createRange();
-                    newRange.setStartAfter(textNode);
-                    newRange.collapse(true);
-                    selection.removeAllRanges();
-                    selection.addRange(newRange);
-                }
-                
-                processInput();
-            }
-        });
-        
+
         inputArea.addEventListener('input', () => {
             if (!isComposing) {
                 processInput();
             }
         });
-
-        function processInput() {
-            highlightKeywords();
-            recommendType();
-            checkPlaceholder();
-        }
-
-        function highlightKeywords() {
-            const currentSelection = window.getSelection();
-            const currentRange = currentSelection.rangeCount > 0 ? currentSelection.getRangeAt(0) : null;
-            const currentOffset = currentRange ? getCaretCharacterOffsetWithin(inputArea) : null;
-
-            const complaintSpans = inputArea.querySelectorAll('span.highlight-complaint');
-            complaintSpans.forEach(span => {
-                const parent = span.parentNode;
-                const textNode = document.createTextNode(span.textContent);
-                parent.replaceChild(textNode, span);
-                parent.normalize();
-            });
-
-            let keywordCounts = {};
-            let totalCount = 0;
-            const regex = new RegExp(`(${complaintKeywords.join('|')})`, 'gi');
-            
-            const treeWalker = document.createTreeWalker(inputArea, NodeFilter.SHOW_TEXT, null, false);
-            let node;
-            
-            while ((node = treeWalker.nextNode())) {
-                const text = node.nodeValue;
-                const matches = [...text.matchAll(regex)];
-                
-                if (matches.length > 0) {
-                    let lastIndex = 0;
-                    const fragment = document.createDocumentFragment();
-                    matches.forEach(match => {
-                        const keyword = match[0];
-                        const index = match.index;
-                        
-                        const textBefore = text.substring(lastIndex, index);
-                        if (textBefore) fragment.appendChild(document.createTextNode(textBefore));
-                        
-                        const span = document.createElement('span');
-                        span.className = 'highlight-complaint';
-                        span.style.color = 'red';
-                        span.textContent = keyword;
-                        fragment.appendChild(span);
-
-                        lastIndex = index + keyword.length;
-                        keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
-                        totalCount++;
-                    });
-                    
-                    const textAfter = text.substring(lastIndex);
-                    if (textAfter) fragment.appendChild(document.createTextNode(textAfter));
-                    
-                    node.parentNode.replaceChild(fragment, node);
+        
+        inputArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (!isComposing) {
+                    e.preventDefault();
+                    document.execCommand('insertLineBreak');
+                    processInput();
                 }
             }
-            
-            if (currentRange) {
-                setCaretPosition(inputArea, currentOffset);
-            }
+        });
+        
+        function processInput() {
+            highlightComplaintKeywords();
+            analyzeAndRecommendType(); // (대체) ML 백엔드 호출
+        }
 
-            if (totalCount > 0) {
-                updateUIForComplaintState(keywordCounts, totalCount);
+        // 기존 불만 키워드 감지 및 하이라이팅 기능
+        function highlightComplaintKeywords() {
+            const caretOffset = getCaretCharacterOffsetWithin(inputArea);
+            const rawText = inputArea.textContent;
+            let keywordCounts = {};
+            let highlightedHtml = '';
+            let lastIndex = 0;
+
+            const matches = [...rawText.matchAll(new RegExp(complaintKeywords.join('|'), 'gi'))];
+            
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    const keyword = match[0];
+                    const index = match.index;
+                    
+                    highlightedHtml += escapeHTML(rawText.substring(lastIndex, index));
+                    highlightedHtml += `<span style="color:red;">${escapeHTML(keyword)}</span>`;
+                    lastIndex = index + keyword.length;
+
+                    keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
+                });
+                highlightedHtml += escapeHTML(rawText.substring(lastIndex));
+                inputArea.innerHTML = highlightedHtml;
+                setCaretPosition(inputArea, caretOffset);
+                updateUIForComplaintState(keywordCounts);
             } else {
+                inputArea.innerHTML = escapeHTML(rawText);
+                setCaretPosition(inputArea, caretOffset);
                 updateUIForNormalState();
             }
         }
+        
+        function escapeHTML(text) {
+            return text.replace(/&/g, '&amp;')
+                       .replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;');
+        }
 
+        // 키워드 발견 시 UI 업데이트
+        function updateUIForComplaintState(keywordCounts) {
+            inputArea.style.border = '1px solid red';
+            resultBox.className = 'result complaint';
+            resultBox.innerText = '🚨 불만 의심 표현이 감지되었습니다.';
+            resultBox.style.display = 'block';
+
+            keywordList.innerHTML = '';
+            const foundKeywords = Object.keys(keywordCounts);
+            foundKeywords.forEach(k => {
+                const span = document.createElement('span');
+                span.className = 'keyword';
+                span.innerText = `${k}(${keywordCounts[k]})`;
+                span.addEventListener('click', () => {
+                    keywordDescBox.innerText = `「${k}」: ${keywordDescriptions[k] || '설명 없음'}`;
+                    keywordDescBox.style.display = 'block';
+                });
+                keywordList.appendChild(span);
+            });
+
+            const totalCount = Object.values(keywordCounts).reduce((a, b) => a + b, 0);
+            const summary = document.createElement('div');
+            summary.style.marginTop = '10px';
+            summary.style.fontWeight = 'bold';
+            summary.style.fontSize = '1.1em';
+            summary.textContent = `총 감지 단어 수: ${totalCount}개`;
+            keywordList.appendChild(summary);
+        }
+
+        // 키워드 없을 시 UI 업데이트
+        function updateUIForNormalState() {
+            inputArea.style.border = '1px solid #ccc';
+            resultBox.className = 'result normal';
+            resultBox.innerText = '✅ 불만 표현이 감지되지 않았습니다.';
+            resultBox.style.display = 'block';
+            keywordList.innerHTML = '';
+            keywordDescBox.style.display = 'none';
+        }
+        
+        // (대체) 상담 유형 추천: 머신러닝 백엔드 호출
+        function analyzeAndRecommendType() {
+            const text = inputArea.textContent.trim();
+            if (text.length === 0) {
+                typeRecommendationBox.style.display = 'none';
+                return;
+            }
+
+            // 실시간 호출: localhost:5000/predict
+            fetch("http://localhost:5000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // data = { major, middle, minor, top3?: [{label, score}] }
+                recommendationList.innerHTML = '';
+                typeRecommendationBox.style.display = 'block';
+
+                // 최상위 1개(대/중/소)
+                const p = document.createElement('p');
+                p.textContent = `${data.major} / ${data.middle} / ${data.minor}`;
+                recommendationList.appendChild(p);
+
+                // 선택: 상위 3개(있다면)
+                if (Array.isArray(data.top3) && data.top3.length > 0) {
+                    data.top3.forEach(item => {
+                        const p2 = document.createElement('p');
+                        p2.textContent = `${item.label} (${item.score})`;
+                        recommendationList.appendChild(p2);
+                    });
+                }
+            })
+            .catch(err => {
+                console.error("예측 오류:", err);
+                typeRecommendationBox.style.display = 'none';
+            });
+        }
+
+        // 기존 커서 위치 관리 함수 (생략 없이 유지)
         function getCaretCharacterOffsetWithin(element) {
             let caretOffset = 0;
             const doc = element.ownerDocument || element.document;
@@ -602,10 +388,9 @@ AS관련,기기AS관련,AS,기기,점검,,,,,,
             const sel = win.getSelection();
             let currentOffset = 0;
             let found = false;
-            
+
             function traverse(node) {
                 if (found) return;
-                
                 if (node.nodeType === Node.TEXT_NODE) {
                     const nextOffset = currentOffset + node.length;
                     if (offset <= nextOffset) {
@@ -624,161 +409,42 @@ AS관련,기기AS관련,AS,기기,점검,,,,,,
                     }
                 }
             }
-            
+
             traverse(element);
         }
 
-        function updateUIForComplaintState(keywordCounts, totalCount) {
-            inputArea.style.border = '1px solid red';
-            resultBox.className = 'result-box complaint';
-            resultBox.innerText = '불만 의심 표현이 감지되었습니다.';
-            resultBox.style.display = 'block';
+        // 🔒 보안 상태 감시 (유지)
+        const statusBox = document.getElementById('securityStatus');
+        statusBox.textContent = "🔒 보안 상태: 안전 — 외부 전송 없음";
+        statusBox.style.color = "white";
+        statusBox.style.fontSize = "0.9em";
 
-            keywordsBox.style.display = 'flex';
-            keywordsTitle.innerHTML = `VOC 키워드 (${totalCount}개)`;
-            keywordList.innerHTML = '';
-            
-            const foundKeywords = Object.keys(keywordCounts);
-            foundKeywords.forEach(k => {
-                const span = document.createElement('span');
-                span.className = 'keyword';
-                span.innerText = `${k}(${keywordCounts[k]})`;
-                span.addEventListener('click', () => {
-                    keywordDescBox.innerText = `「${k}」: ${keywordDescriptions[k] || '설명 없음'}`;
-                    keywordDescBox.style.display = 'block';
-                });
-                keywordList.appendChild(span);
-            });
-            keywordDescBox.style.display = 'none';
-        }
-        
-        function updateUIForNormalState() {
-            inputArea.style.border = '1px solid #ccc';
-            resultBox.className = 'result-box normal';
-            resultBox.innerText = '불만 표현이 감지되지 않았습니다.';
-            resultBox.style.display = 'block';
+window.fetch = function(...args) {
+    const url = args[0];
+    if (url.startsWith("http://localhost:5000")) {
+        // 로컬호스트는 안전하게 허용
+        return originalFetch.apply(this, args);
+    } else {
+        statusBox.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";
+        statusBox.style.backgroundColor = "red";
+        statusBox.style.fontSize = "0.9em";
+        return originalFetch.apply(this, args);
+    }
+};
 
-            keywordsBox.style.display = 'none';
-            keywordList.innerHTML = '';
-            keywordDescBox.style.display = 'none';
-
-            if (inputArea.textContent.trim().length === 0) {
-                initialMessage.style.display = 'block';
-            } else {
-                initialMessage.style.display = 'none';
-            }
-        }
-
-        function recommendType() {
-            const text = inputArea.textContent.trim();
-            const words = text.split(/\s+/).filter(w => w.length > 0);
-            
-            initialMessage.style.display = (text.length === 0) ? 'block' : 'none';
-
-            if (text.length === 0) {
-                recommendationList.innerHTML = `<div class="initial-message">내용을 입력하면<br>추천 유형이 나타납니다.</div>`;
-                return;
-            }
-            
-            let scores = [];
-            const tokenizedText = words.map(word => word.replace(/[,.?!]/g, ''));
-            const termFrequencyInInput = {};
-            tokenizedText.forEach(word => {
-                termFrequencyInInput[word] = (termFrequencyInInput[word] || 0) + 1;
-            });
-            
-            parsedData.forEach(type => {
-                let totalScore = 0;
-                let matchedKeywords = [];
-                type.allKeywords.forEach(keyword => {
-                    const cleanKeyword = keyword.replace(/ /g, '');
-                    if (text.includes(cleanKeyword)) {
-                        const tf = termFrequencyInInput[cleanKeyword] || 0;
-                        const idf = idfScores[keyword] || 0;
-                        const tfidfScore = tf * idf;
-                        totalScore += tfidfScore;
-                        matchedKeywords.push(keyword);
-                    }
-                });
-
-                if (matchedKeywords.length > 1) {
-                    const sortedMatched = matchedKeywords.sort((a, b) => (idfScores[b] || 0) - (idfScores[a] || 0));
-                    const highestScoringKeyword = sortedMatched[0];
-                    const highestScoringIndex = tokenizedText.indexOf(highestScoringKeyword);
-                    
-                    if (highestScoringIndex !== -1) {
-                        for (let i = 1; i < sortedMatched.length; i++) {
-                            const otherKeyword = sortedMatched[i];
-                            const otherIndex = tokenizedText.indexOf(otherKeyword);
-                            const distance = Math.abs(highestScoringIndex - otherIndex);
-                            if (distance > 0 && distance <= 5) {
-                                totalScore += 10;
-                            }
-                        }
-                    }
-                }
-
-                if (matchedKeywords.length > 0) {
-                    scores.push({
-                        type: `${type.mainType}-${type.subType}`,
-                        score: totalScore,
-                        matchedKeywords: matchedKeywords
-                    });
-                }
-            });
-            
-            scores.sort((a, b) => b.score - a.score);
-            const top3 = scores.slice(0, 3);
-
-            recommendationList.innerHTML = '';
-            if (top3.length > 0) {
-                top3.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'recommendation-item';
-                    div.innerHTML = `
-                        <div class="recommendation-item-line"></div>
-                        <div class="recommendation-item-content">
-                            <div class="recommendation-title">${item.type}</div>
-                            <div class="match-info">
-                                점수: <strong>${item.score.toFixed(1)}점</strong><br>
-                                일치 키워드: ${item.matchedKeywords.join(', ')}
-                            </div>
-                        </div>
-                    `;
-                    recommendationList.appendChild(div);
-                });
-            } else {
-                recommendationList.innerHTML = `<div class="initial-message">일치하는 유형이 없습니다.</div>`;
-            }
-        }
-
-        function checkPlaceholder() {
-            if (inputArea.textContent.trim() === '') {
-                inputArea.setAttribute('data-placeholder', inputArea.getAttribute('placeholder'));
-            } else {
-                inputArea.removeAttribute('data-placeholder');
-            }
-        }
-        
-        const originalFetch = window.fetch;
-        window.fetch = function(...args) {
-            securityBanner.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";
-            securityBanner.style.backgroundColor = "red";
-            securityBanner.style.color = "white";
-            return originalFetch.apply(this, args);
-        };
         const originalXHR = window.XMLHttpRequest;
         function MonitorXHR() {
             const xhr = new originalXHR();
             xhr.addEventListener('loadstart', () => {
-                securityBanner.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";
-                securityBanner.style.backgroundColor = "red";
-                securityBanner.style.color = "white";
+                statusBox.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";
+                statusBox.style.backgroundColor = "red";
+                statusBox.style.fontSize = "0.9em";
             });
             return xhr;
         }
         window.XMLHttpRequest = MonitorXHR;
 
+        // 📲 설치 안내 팝업 UI (유지)
         let deferredPrompt;
         const installPopup = document.getElementById('installPopup');
         const confirmInstall = document.getElementById('confirmInstall');
@@ -787,11 +453,11 @@ AS관련,기기AS관련,AS,기기,점검,,,,,,
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installPopup.style.display = 'block'; 
+            installPopup.style.display = 'block';
         });
 
         window.addEventListener('appinstalled', () => {
-            installPopup.style.display = 'none'; 
+            installPopup.style.display = 'none';
         });
 
         confirmInstall.addEventListener('click', () => {
@@ -816,12 +482,12 @@ AS관련,기기AS관련,AS,기기,점검,,,,,,
             deferredPrompt = null;
         });
 
+        // ✅ service worker 등록 (유지)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
                 .then(() => console.log('✅ Service Worker 등록 완료'))
                 .catch(err => console.error('❌ Service Worker 등록 실패:', err));
         }
-
     </script>
 </body>
 </html>

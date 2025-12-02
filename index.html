@@ -335,11 +335,11 @@
             }
 
             // 실시간 호출: localhost:5000/predict
-            fetch("http://localhost:5000/predict", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text })
-            })
+            fetch("http://10.20.50.48:5000/predict", {
+             method: "POST",
+            headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ text: text })
+          })
             .then(res => res.json())
             .then(data => {
                 // data = { major, middle, minor, top3?: [{label, score}] }
@@ -419,10 +419,11 @@
         statusBox.style.color = "white";
         statusBox.style.fontSize = "0.9em";
 
+const originalFetch = window.fetch;
 window.fetch = function(...args) {
     const url = args[0];
-    if (url.startsWith("http://localhost:5000")) {
-        // 로컬호스트는 안전하게 허용
+    if (url.startsWith("http://localhost:5000") || url.startsWith("http://10.20.50.48:5000")) {
+        // localhost와 서버 IP 모두 허용
         return originalFetch.apply(this, args);
     } else {
         statusBox.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";

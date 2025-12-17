@@ -2,108 +2,480 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>밀크티 고객센터 불만 감지 시스템</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Milk T : VOC Management System</title>
     <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f4f6f8;
+        :root {
+            /* [천재교육 & 밀크T 브랜드 컬러 팔레트] */
+            --brand-primary: #0085CA;       /* 천재교육 메인 블루 */
+            --brand-secondary: #00C6ED;     /* 밀크T 시그니처 시안(Cyan) */
+            --brand-dark: #1A2B45;          /* 전문적인 딥 네이비 (헤더용) */
+            
+            --ui-bg: #EAECEF;               /* 차분한 회색 배경 */
+            --ui-surface: #FFFFFF;
+            
+            --line-strong: #BDC3C7;         /* 진한 경계선 */
+            --line-light: #E0E0E0;
+            
+            --text-main: #2C3E50;
+            --text-sub: #5D6D7E;
+            
+            --state-danger: #E74C3C;        /* 경고 (선명한 빨강) */
+            --state-danger-bg: #FDEDEC;
+            --state-success: #27AE60;       /* 정상 (선명한 초록) */
+            --state-success-bg: #EAFAF1;
+            
+            --header-height: 60px;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--ui-bg);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
+
+        /* --- 1. GNB (Global Navigation Bar) --- */
         header {
-            background: linear-gradient(135deg, #003366, #00509e);
+            height: var(--header-height);
+            background-color: var(--brand-dark);
+            border-bottom: 4px solid var(--brand-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
             color: white;
-            padding: 20px;
-            font-size: 1.8em;
-            font-weight: bold;
-            border-radius: 0 0 12px 12px;
-            text-align: center;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        main {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-top: 20px;
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
-        .notice {
-            background-color: #f9fafb;
-            border-left: 5px solid #00509e;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-            line-height: 1.6;
+
+        .logo-symbol {
+            width: 32px;
+            height: 32px;
+            background: var(--brand-secondary);
+            color: var(--brand-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4rem;
+            font-family: sans-serif;
+            border-radius: 0; 
         }
-        .input-area {
-            width: 100%;
-            min-height: 150px;
-            padding: 15px;
-            box-sizing: border-box;
-            font-size: 0.95em;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: white;
-            outline: none;
-            white-space: pre-wrap;
-            word-break: break-word;
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.9rem;
         }
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1em;
-            display: none;
-        }
-        .complaint {
-            background-color: #fff0f0;
-            border: 1px solid #c0392b;
-            color: #c0392b;
-        }
-        .normal {
-            background-color: #e6f4ea;
-            border: 1px solid #2e7d32;
-            color: #1b5e20;
-        }
-        .keywords {
-            margin-top: 10px;
-            font-size: 0.95em;
-        }
-        .keyword {
-            display: inline-block;
-            background-color: #ffcccc;
-            color: #900;
+
+        .user-tag {
+            background: #000;
+            color: var(--brand-secondary);
             padding: 4px 8px;
-            margin: 4px;
-            border-radius: 4px;
-            font-weight: normal;
-            cursor: pointer;
-            font-size: 0.95em;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
         }
-        .keyword-desc {
-            margin-top: 10px;
-            padding: 10px;
-            background: #f1f1f1;
-            border-radius: 6px;
-            font-size: 0.9em;
+
+        /* --- 2. Main Layout --- */
+        .layout-wrapper {
+            display: flex;
+            height: calc(100vh - var(--header-height));
+            width: 100%;
+            padding: 16px;
+            gap: 16px;
+        }
+
+        .panel {
+            background: var(--ui-surface);
+            border: 1px solid var(--line-strong);
+            display: flex;
+            flex-direction: column;
+            box-shadow: none; 
+        }
+
+        /* --- 좌측: 에디터 영역 --- */
+        .left-panel {
+            flex: 5;
+            min-width: 400px;
+        }
+
+        .panel-header {
+            background: #F4F6F7;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--line-strong);
+            font-weight: 700;
+            color: var(--brand-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .panel-header::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 16px;
+            background: var(--brand-primary);
+        }
+
+        .editor-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 8px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--line-light);
+            color: var(--text-sub);
+            font-size: 0.85rem;
+        }
+        
+        .toolbar-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .input-area {
+            flex: 1;
+            width: 100%;
+            border: 1px solid var(--line-light);
+            padding: 20px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            outline: none;
+            resize: none;
+            background-color: #FAFAFA;
+            color: #000;
+            border-radius: 0; 
+        }
+
+        .input-area:focus {
+            background-color: #fff;
+            border-color: var(--brand-primary);
+            box-shadow: inset 3px 0 0 var(--brand-primary);
+        }
+
+        .highlight-complaint {
+            color: var(--state-danger);
+            font-weight: 900;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-bottom: 2px solid var(--state-danger);
+            padding: 0 2px;
+        }
+
+        /* --- 우측: 분석 대시보드 --- */
+        .right-panel {
+            flex: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: transparent;
+            border: none;
+        }
+
+        .status-panel {
+            flex: 0 0 auto;
+            background: var(--ui-surface);
+            border: 1px solid var(--line-strong);
+            padding: 16px;
+        }
+
+        .result-row {
+            display: flex;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .result-badge {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 1px solid;
+            border-radius: 0;
+            text-transform: uppercase;
+        }
+
+        .result-badge.normal {
+            background: var(--state-success-bg);
+            border-color: var(--state-success);
+            color: var(--state-success);
+        }
+
+        .result-badge.complaint {
+            background: var(--state-danger-bg);
+            border-color: var(--state-danger);
+            color: var(--state-danger);
+        }
+
+        .detected-keywords {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--line-strong);
             display: none;
         }
-        #securityStatus {
-            margin-top: 30px;
-            font-weight: bold;
-            font-size: 0.85em;
-            text-align: center;
-            background-color: #003366;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 0 0 12px 12px;
+        
+        .keyword-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
+
+        .keyword-chip {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid var(--state-danger);
+            color: var(--state-danger);
+            padding: 4px 8px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .keyword-chip:hover {
+            background: var(--state-danger);
+            color: #fff;
+        }
+
+        .keyword-desc {
+            margin-top: 8px;
+            background: #2C3E50;
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .recommendation-panel {
+            flex: 1;
+            background: var(--ui-surface);
+            border: 1px solid var(--line-strong);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .rec-content {
+            padding: 16px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .top5-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+            border: 1px solid var(--line-strong);
+        }
+        
+        .top5-table th, .top5-table td {
+            padding: 12px 14px;
+            border: 1px solid var(--line-light);
+            font-size: 0.9rem;
+            text-align: left;
+            position: relative;
+        }
+        
+        .top5-table th {
+            background: #F8F9F9;
+            color: var(--text-sub);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .top5-row {
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .top5-row:hover {
+            background: #F4F6F7;
+        }
+        .top5-row.rank-1 {
+            background: #EBF5FB;
+            font-weight: 700;
+        }
+        .top5-row.rank-1 td {
+            border-top: 2px solid var(--brand-primary);
+            border-bottom: 2px solid var(--brand-primary);
+            color: var(--brand-primary);
+        }
+
+        .score-num {
+            font-family: 'Consolas', monospace;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .score-tooltip {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            background: #eef4f8;
+            border: 1px solid #0085CA;
+            padding: 8px 12px;
+            z-index: 100;
+            font-size: 0.85rem;
+            color: #2C3E50;
+            font-weight: normal;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        
+        .score-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 20px;
+            border-width: 0 6px 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent #0085CA transparent;
+        }
+
+        .top5-row:hover .score-tooltip {
+            display: block;
+        }
+
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--line-light);
+            border: 1px solid var(--line-light);
+        }
+
+        .cat-btn {
+            background: #fff;
+            padding: 12px 4px;
+            text-align: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: var(--text-sub);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+        }
+
+        .cat-btn:hover {
+            background: #F2F3F4;
+            color: #000;
+        }
+
+        .cat-btn.highlighted {
+            color: var(--brand-primary);
+            font-weight: 700;
+            background: #EBF5FB;
+        }
+
+        .cat-btn.selected {
+            background: var(--brand-dark);
+            color: var(--brand-secondary);
+            font-weight: 700;
+        }
+
+        .sub-cat-wrapper {
+            margin-top: 16px;
+            border: 1px solid var(--line-strong);
+            background: #fff;
+            display: none;
+        }
+        
+        .sub-cat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--line-light);
+            font-size: 0.9rem;
+            color: #1A2B45; 
+        }
+        .sub-cat-row:last-child { border-bottom: none; }
+        
+        .sub-cat-row.active {
+            background: #f0f8ff;
+            font-weight: 700;
+        }
+
+        .sub-cat-score {
+            font-family: 'Consolas', monospace;
+            font-weight: 700;
+            color: var(--brand-primary);
+        }
+        
+        .sub-cat-score.zero {
+            color: #D5D8DC;
+            font-weight: 400;
+        }
+
+        .empty-placeholder {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        .footer-bar {
+            background: #2C3E50;
+            color: #95A5A6;
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hidden-badge { color: var(--state-danger); font-weight: 900; margin-left: 4px; }
+        .breadcrumb { display: flex; align-items: center; gap: 4px; }
+        .sep { color: var(--line-strong); font-size: 0.8rem; }
+
+        /* [요청반영 1] 설치 팝업 스타일 (원본 스타일 복구) */
         #installPopup {
             display: none;
             position: fixed;
@@ -111,12 +483,18 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            border: 2px solid #00509e;
+            border: 2px solid var(--brand-primary);
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             z-index: 9999;
             text-align: center;
+            width: 300px;
+        }
+        #installPopup p {
+            margin-top: 0;
+            color: var(--text-main);
+            font-weight: 700;
         }
         #installPopup button {
             margin: 5px;
@@ -124,54 +502,113 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 500;
         }
         #confirmInstall {
-            background: #00509e;
+            background: var(--brand-primary);
             color: white;
         }
         #cancelInstall {
             background: #ccc;
+            color: #333;
         }
-        .type-recommendation {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #e6f7ff;
-            border: 1px solid #1890ff;
-        }
-        .type-recommendation h3 {
-            margin-top: 0;
-            font-size: 1.1em;
-            color: #00509e;
-        }
-        .type-recommendation p {
-            margin: 5px 0;
-            font-weight: bold;
+
+        @media (max-width: 1024px) {
+            .layout-wrapper { flex-direction: column; overflow-y: auto; height: auto; }
+            .left-panel, .right-panel { flex: none; width: 100%; min-width: 0; }
+            .input-area { min-height: 200px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>밀크티 고객센터 불만 감지 시스템</header>
-        <main>
-            <div class="notice">
-                상담 내용을 입력하면, 불만으로 의심되는 표현과 함께 <br>
-                가장 관련성 높은 <strong>상담 유형(VOC)</strong>을 추천해 드립니다.
+
+    <header>
+        <div class="brand-logo">
+            <div class="logo-symbol">T</div>
+            <span style="margin-left:8px;">Genius VOC System</span>
+        </div>
+        <div class="user-info">
+            <span class="material-icons-sharp" style="font-size:18px;">support_agent</span>
+            <span>고객상담팀 | 김천재 매니저</span>
+            <span class="user-tag">ADMIN</span>
+        </div>
+    </header>
+
+    <div class="layout-wrapper">
+        
+        <section class="panel left-panel">
+            <div class="panel-header">
+                <span class="material-icons-sharp" style="font-size:18px; color:var(--text-sub);">edit_note</span>
+                상담 내용 기록 (Transcript)
             </div>
+            <div class="editor-container">
+                <div class="editor-toolbar">
+                    <div class="toolbar-item">
+                        <span class="material-icons-sharp" style="font-size:16px;">history</span>
+                        <span>실시간 분석 중 (Auto-Analysis On)</span>
+                    </div>
+                </div>
+                <div id="inputArea" class="input-area" contenteditable="true" spellcheck="false" data-placeholder="[상담 시작] 고객님의 문의 내용을 상세히 입력하세요."></div>
+            </div>
+        </section>
 
-            <div id="inputArea" class="input-area" contenteditable="true" spellcheck="false"></div>
-
-            <div id="resultBox" class="result"></div>
-            <div id="keywordList" class="keywords"></div>
-            <div id="keywordDesc" class="keyword-desc"></div>
+        <section class="right-panel">
             
-            <div id="typeRecommendationBox" class="type-recommendation" style="display:none;">
-                <h3>추천 상담 유형 (상위 3개)</h3>
-                <div id="recommendationList"></div>
-            </div>
-        </main>
+            <div class="status-panel">
+                <div id="resultBox" style="display:none;" class="result-row"></div>
+                <div id="initialComplaintMessage" class="result-badge" style="background:#F2F3F4; border-color:#BDC3C7; color:#7F8C8D;">
+                    <span class="material-icons-sharp">hourglass_empty</span>
+                    <span>상담 내용 입력 대기</span>
+                </div>
 
-        <div id="securityStatus">🔒 보안 상태: 안전 — 외부 전송 없음</div>
+                <div id="keywordsBox" class="detected-keywords">
+                    <div class="keyword-label">
+                        <span class="material-icons-sharp" style="font-size:14px; color:var(--state-danger);">error</span>
+                        감지된 불만 키워드 (VOC Issues)
+                    </div>
+                    <div id="keywordList"></div>
+                    <div id="keywordDesc" class="keyword-desc"></div>
+                </div>
+            </div>
+
+            <div class="recommendation-panel">
+                <div class="panel-header">
+                    <span class="material-icons-sharp" style="font-size:18px; color:var(--text-sub);">psychology</span>
+                    AI 추천 유형 (Smart Suggestion)
+                </div>
+                
+                <div class="rec-content">
+                    <div id="top5Block" style="display:none;">
+                        <table class="top5-table">
+                            <thead>
+                                <tr>
+                                    <th width="15%">순위</th>
+                                    <th>상담 유형 (대분류 > 상세)</th>
+                                    <th width="20%">적합도</th>
+                                </tr>
+                            </thead>
+                            <tbody id="top5Container">
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <div id="groupedRecommendations">
+                        <div class="empty-placeholder">
+                            <span class="material-icons-sharp" style="font-size:48px; color:#D5D8DC;">assignment_turned_in</span>
+                            <br><br>
+                            텍스트 분석 후<br>최적의 상담 유형을 표시합니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div id="securityBanner" class="footer-bar">
+        <span class="material-icons-sharp" style="font-size:12px;">lock</span>
+        CHUNJAE EDUCATION INC. INTERNAL USE ONLY.
     </div>
 
     <div id="installPopup">
@@ -180,23 +617,28 @@
         <button id="cancelInstall">취소</button>
     </div>
 
+    <script src="data.js"></script>
+
     <script>
+        // =========================================================
+        //  [로직] data 객체는 data.js에서 불러오므로 여기서는 선언하지 않습니다.
+        // =========================================================
+
         const inputArea = document.getElementById('inputArea');
-        const resultBox = document.getElementById('resultBox');
+        const resultBox = document.getElementById('resultBox'); // flex row container
+        const initialMsg = document.getElementById('initialComplaintMessage');
+        const groupedRecommendations = document.getElementById('groupedRecommendations');
+        const keywordsBox = document.getElementById('keywordsBox');
         const keywordList = document.getElementById('keywordList');
         const keywordDescBox = document.getElementById('keywordDesc');
-        const typeRecommendationBox = document.getElementById('typeRecommendationBox');
-        const recommendationList = document.getElementById('recommendationList');
-
-        // 엑셀 파일에서 추출한 키워드 데이터 (불만 감지용)
+        const top5Container = document.getElementById('top5Container');
+        
+        // 데이터 (기존 유지)
         const complaintKeywords = [
-            "불만", "불쾌", "항의", "짜증", "실망", "불친절",
-            "기분 나빴", "언짢", "무례", "부당", "기분 상했", "강성",
-            "신고", "경찰", "소보원", "소비자보호원", "소비자 보호원",
+            "불만", "불쾌", "항의", "짜증", "실망", "불친절", "기분 나빴", "언짢", "무례", "부당",
+            "기분 상했", "강성", "신고", "경찰", "소보원", "소비자보호원", "소비자 보호원",
             "욕설", "최악", "법적대응"
         ];
-
-        // (유지) 불만 키워드 설명
         const keywordDescriptions = {
             "불만": "서비스나 제품에 대한 전반적인 불만 표현입니다.",
             "불쾌": "고객이 기분이 상하거나 불쾌감을 느낀 상황입니다.",
@@ -220,6 +662,25 @@
             "법적대응": "법적 절차를 진행하겠다는 의사 표현입니다."
         };
 
+        // data 변수는 data.js에서 로드됨
+
+        const parsedData = data.types.map(type => ({
+            ...type,
+            allKeywords: [...type.superMainKeywords, ...type.mainKeywords, ...type.generalKeywords]
+        }));
+        const globalWeights = data.weights;
+
+        const documentFrequency = {};
+        const totalDocuments = parsedData.length;
+        const allUniqueWords = [...new Set(parsedData.flatMap(doc => doc.allKeywords))];
+        allUniqueWords.forEach(word => {
+            documentFrequency[word] = parsedData.filter(doc => doc.allKeywords.includes(word)).length;
+        });
+        const idfScores = {};
+        allUniqueWords.forEach(word => {
+            idfScores[word] = Math.log10(totalDocuments / ((documentFrequency[word] || 0) + 1));
+        });
+
         let isComposing = false;
         
         inputArea.addEventListener('compositionstart', () => { isComposing = true; });
@@ -227,146 +688,90 @@
             isComposing = false;
             processInput();
         });
-
         inputArea.addEventListener('input', () => {
-            if (!isComposing) {
+            if (!isComposing) processInput();
+        });
+        inputArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !isComposing) {
+                e.preventDefault();
+                document.execCommand('insertLineBreak');
                 processInput();
             }
         });
-        
-        inputArea.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                if (!isComposing) {
-                    e.preventDefault();
-                    document.execCommand('insertLineBreak');
-                    processInput();
-                }
-            }
-        });
-        
+
         function processInput() {
-            highlightComplaintKeywords();
-            analyzeAndRecommendType(); // (대체) ML 백엔드 호출
-        }
+            const text = inputArea.textContent.trim();
+            highlightKeywords();
+            recommendType();
+            updatePlaceholder();
 
-        // 기존 불만 키워드 감지 및 하이라이팅 기능
-        function highlightComplaintKeywords() {
-            const caretOffset = getCaretCharacterOffsetWithin(inputArea);
-            const rawText = inputArea.textContent;
-            let keywordCounts = {};
-            let highlightedHtml = '';
-            let lastIndex = 0;
-
-            const matches = [...rawText.matchAll(new RegExp(complaintKeywords.join('|'), 'gi'))];
-            
-            if (matches.length > 0) {
-                matches.forEach(match => {
-                    const keyword = match[0];
-                    const index = match.index;
-                    
-                    highlightedHtml += escapeHTML(rawText.substring(lastIndex, index));
-                    highlightedHtml += `<span style="color:red;">${escapeHTML(keyword)}</span>`;
-                    lastIndex = index + keyword.length;
-
-                    keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
-                });
-                highlightedHtml += escapeHTML(rawText.substring(lastIndex));
-                inputArea.innerHTML = highlightedHtml;
-                setCaretPosition(inputArea, caretOffset);
-                updateUIForComplaintState(keywordCounts);
+            if (text.length === 0) {
+                // 초기 상태
+                initialMsg.style.display = 'flex';
+                resultBox.style.display = 'none';
+                keywordsBox.style.display = 'none';
             } else {
-                inputArea.innerHTML = escapeHTML(rawText);
-                setCaretPosition(inputArea, caretOffset);
-                updateUIForNormalState();
+                initialMsg.style.display = 'none';
             }
         }
-        
-        function escapeHTML(text) {
-            return text.replace(/&/g, '&amp;')
-                       .replace(/</g, '&lt;')
-                       .replace(/>/g, '&gt;');
+
+        function updatePlaceholder() {
+            if (inputArea.textContent.trim() === '') {
+                inputArea.setAttribute('data-placeholder', '[상담 시작] 고객님의 문의 내용을 상세히 입력하세요.');
+            } else {
+                inputArea.removeAttribute('data-placeholder');
+            }
         }
 
-        // 키워드 발견 시 UI 업데이트
-        function updateUIForComplaintState(keywordCounts) {
-            inputArea.style.border = '1px solid red';
-            resultBox.className = 'result complaint';
-            resultBox.innerText = '🚨 불만 의심 표현이 감지되었습니다.';
-            resultBox.style.display = 'block';
-
-            keywordList.innerHTML = '';
-            const foundKeywords = Object.keys(keywordCounts);
-            foundKeywords.forEach(k => {
-                const span = document.createElement('span');
-                span.className = 'keyword';
-                span.innerText = `${k}(${keywordCounts[k]})`;
-                span.addEventListener('click', () => {
-                    keywordDescBox.innerText = `「${k}」: ${keywordDescriptions[k] || '설명 없음'}`;
-                    keywordDescBox.style.display = 'block';
-                });
-                keywordList.appendChild(span);
-            });
-
-            const totalCount = Object.values(keywordCounts).reduce((a, b) => a + b, 0);
-            const summary = document.createElement('div');
-            summary.style.marginTop = '10px';
-            summary.style.fontWeight = 'bold';
-            summary.style.fontSize = '1.1em';
-            summary.textContent = `총 감지 단어 수: ${totalCount}개`;
-            keywordList.appendChild(summary);
-        }
-
-        // 키워드 없을 시 UI 업데이트
-        function updateUIForNormalState() {
-            inputArea.style.border = '1px solid #ccc';
-            resultBox.className = 'result normal';
-            resultBox.innerText = '✅ 불만 표현이 감지되지 않았습니다.';
-            resultBox.style.display = 'block';
-            keywordList.innerHTML = '';
-            keywordDescBox.style.display = 'none';
-        }
-        
-        // (대체) 상담 유형 추천: 머신러닝 백엔드 호출
-        function analyzeAndRecommendType() {
-            const text = inputArea.textContent.trim();
-            if (text.length === 0) {
-                typeRecommendationBox.style.display = 'none';
+        function highlightKeywords() {
+            if (!inputArea.textContent.trim()) {
+                inputArea.innerHTML = '';
+                updateUIForNormalState();
                 return;
             }
 
-            // 실시간 호출: localhost:5000/predict
-            fetch("http://10.20.50.48:5000/predict", {
-             method: "POST",
-            headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ text: text })
-          })
-            .then(res => res.json())
-            .then(data => {
-                // data = { major, middle, minor, top3?: [{label, score}] }
-                recommendationList.innerHTML = '';
-                typeRecommendationBox.style.display = 'block';
+            const currentSelection = window.getSelection();
+            const currentRange = currentSelection.rangeCount > 0 ? currentSelection.getRangeAt(0) : null;
+            const currentOffset = currentRange ? getCaretCharacterOffsetWithin(inputArea) : null;
+            
+            const text = inputArea.textContent;
+            let newHtml = '';
+            let lastIndex = 0;
+            let keywordCounts = {};
 
-                // 최상위 1개(대/중/소)
-                const p = document.createElement('p');
-                p.textContent = `${data.major} / ${data.middle} / ${data.minor}`;
-                recommendationList.appendChild(p);
-
-                // 선택: 상위 3개(있다면)
-                if (Array.isArray(data.top3) && data.top3.length > 0) {
-                    data.top3.forEach(item => {
-                        const p2 = document.createElement('p');
-                        p2.textContent = `${item.label} (${item.score})`;
-                        recommendationList.appendChild(p2);
-                    });
+            const matches = Array.from(text.matchAll(new RegExp(`(${complaintKeywords.join('|')})`, 'gi')));
+            
+            if (matches.length > 0) {
+                matches.sort((a, b) => a.index - b.index);
+                for (const match of matches) {
+                    const keyword = match[0];
+                    const index = match.index;
+                    if (index >= lastIndex) {
+                        newHtml += text.substring(lastIndex, index);
+                        newHtml += `<span class="highlight-complaint">${keyword}</span>`;
+                        lastIndex = index + keyword.length;
+                        keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
+                    }
                 }
-            })
-            .catch(err => {
-                console.error("예측 오류:", err);
-                typeRecommendationBox.style.display = 'none';
-            });
+                newHtml += text.substring(lastIndex);
+            } else {
+                newHtml = text;
+            }
+
+            inputArea.innerHTML = newHtml;
+
+            if (currentRange) {
+                setCaretPosition(inputArea, currentOffset);
+            }
+            
+            if (Object.keys(keywordCounts).length > 0) {
+                const totalCount = Object.values(keywordCounts).reduce((sum, count) => sum + count, 0);
+                updateUIForComplaintState(keywordCounts, totalCount);
+            } else {
+                updateUIForNormalState();
+            }
         }
 
-        // 기존 커서 위치 관리 함수 (생략 없이 유지)
         function getCaretCharacterOffsetWithin(element) {
             let caretOffset = 0;
             const doc = element.ownerDocument || element.document;
@@ -388,7 +793,6 @@
             const sel = win.getSelection();
             let currentOffset = 0;
             let found = false;
-
             function traverse(node) {
                 if (found) return;
                 if (node.nodeType === Node.TEXT_NODE) {
@@ -409,86 +813,241 @@
                     }
                 }
             }
-
             traverse(element);
         }
 
-        // 🔒 보안 상태 감시 (유지)
-        const statusBox = document.getElementById('securityStatus');
-        statusBox.textContent = "🔒 보안 상태: 안전 — 외부 전송 없음";
-        statusBox.style.color = "white";
-        statusBox.style.fontSize = "0.9em";
+        /* --- UI 업데이트 함수 --- */
+        function updateUIForComplaintState(keywordCounts, totalCount) {
+            resultBox.innerHTML = `
+                <div class="result-badge complaint">
+                    <span class="material-icons-sharp">report_problem</span>
+                    <span>불만 표현 감지됨 (RISK)</span>
+                </div>
+            `;
+            resultBox.style.display = 'flex';
 
-const originalFetch = window.fetch;
-window.fetch = function(...args) {
-    const url = args[0];
-    if (url.startsWith("http://localhost:5000") || url.startsWith("http://10.20.50.48:5000")) {
-        // localhost와 서버 IP 모두 허용
-        return originalFetch.apply(this, args);
-    } else {
-        statusBox.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";
-        statusBox.style.backgroundColor = "red";
-        statusBox.style.fontSize = "0.9em";
-        return originalFetch.apply(this, args);
-    }
-};
-
-        const originalXHR = window.XMLHttpRequest;
-        function MonitorXHR() {
-            const xhr = new originalXHR();
-            xhr.addEventListener('loadstart', () => {
-                statusBox.textContent = "🚨 보안 경고: 외부로 데이터 전송 시도 감지됨!";
-                statusBox.style.backgroundColor = "red";
-                statusBox.style.fontSize = "0.9em";
+            keywordsBox.style.display = 'block';
+            keywordList.innerHTML = '';
+            
+            const foundKeywords = Object.keys(keywordCounts);
+            foundKeywords.forEach(k => {
+                const span = document.createElement('span');
+                span.className = 'keyword-chip';
+                span.innerText = `${k} (${keywordCounts[k]})`;
+                span.addEventListener('click', () => {
+                    keywordDescBox.innerHTML = `<strong style="color:var(--state-danger);">[${k}]</strong> : ${keywordDescriptions[k] || '설명 없음'}`;
+                    keywordDescBox.style.display = 'block';
+                });
+                keywordList.appendChild(span);
             });
-            return xhr;
+            keywordDescBox.style.display = 'none';
         }
-        window.XMLHttpRequest = MonitorXHR;
+        
+        function updateUIForNormalState() {
+            resultBox.innerHTML = `
+                <div class="result-badge normal">
+                    <span class="material-icons-sharp">verified</span>
+                    <span>상담 내용 정상 (NORMAL)</span>
+                </div>
+            `;
+            resultBox.style.display = 'flex';
 
-        // 📲 설치 안내 팝업 UI (유지)
-        let deferredPrompt;
-        const installPopup = document.getElementById('installPopup');
-        const confirmInstall = document.getElementById('confirmInstall');
-        const cancelInstall = document.getElementById('cancelInstall');
+            keywordsBox.style.display = 'none';
+            keywordList.innerHTML = '';
+            keywordDescBox.style.display = 'none';
+        }
+        
+        // --- 추천 로직 ---
+        let selectedMainType = null;
+        
+        function recommendType() {
+            const text = inputArea.textContent.trim().toLowerCase().replace(/\s+/g, '');
+            top5Container.innerHTML = '';
+            
+            const hasComplaintKeyword = complaintKeywords.some(k => text.includes(k));
+            let recommendations = [];
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installPopup.style.display = 'block';
-        });
+            data.types.forEach(type => {
+                const currentWeights = type.weights || globalWeights;
+                const { superMainKeywordWeight, mainKeywordWeight, generalKeywordBonus } = currentWeights;
+                let score = 0;
+                let matchedKeywords = [];
+                let hiddenType = null;
 
-        window.addEventListener('appinstalled', () => {
-            installPopup.style.display = 'none';
-        });
-
-        confirmInstall.addEventListener('click', () => {
-            installPopup.style.display = 'none';
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(choiceResult => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('앱 설치 완료');
-                    } else {
-                        console.log('사용자가 설치를 취소함');
+                type.superMainKeywords.forEach(keyword => {
+                    if (text.includes(keyword.toLowerCase())) {
+                        const keywordScore = superMainKeywordWeight + (idfScores[keyword] || 0);
+                        score += keywordScore;
+                        matchedKeywords.push({ keyword, score: keywordScore, type: 'superMain' });
                     }
-                    deferredPrompt = null;
+                });
+                type.mainKeywords.forEach(keyword => {
+                    if (text.includes(keyword.toLowerCase())) {
+                        const keywordScore = mainKeywordWeight + (idfScores[keyword] || 0);
+                        score += keywordScore;
+                        matchedKeywords.push({ keyword, score: keywordScore, type: 'main' });
+                    }
+                });
+                type.generalKeywords.forEach(keyword => {
+                    if (text.includes(keyword.toLowerCase()) && !matchedKeywords.some(mk => mk.keyword.toLowerCase() === keyword.toLowerCase())) {
+                        score += generalKeywordBonus;
+                        matchedKeywords.push({ keyword, score: generalKeywordBonus, type: 'general' });
+                    }
+                });
+                recommendations.push({ ...type, score: score, matchedKeywords: matchedKeywords, hiddenType: null });
+            });
+
+            if (hasComplaintKeyword) {
+                recommendations.forEach(recommendation => {
+                    let hiddenKeywordsList = null;
+                    if (recommendation.hiddenKeywordRef) hiddenKeywordsList = data.commonHiddenKeywords[recommendation.hiddenKeywordRef];
+                    else if (recommendation.hiddenKeywords) hiddenKeywordsList = recommendation.hiddenKeywords;
+
+                    let allHiddenKeywords = [];
+                    if (Array.isArray(hiddenKeywordsList)) allHiddenKeywords = allHiddenKeywords.concat(hiddenKeywordsList);
+                    if (Array.isArray(recommendation.exceptionHiddenKeywords)) allHiddenKeywords = allHiddenKeywords.concat(recommendation.exceptionHiddenKeywords);
+
+                    if (allHiddenKeywords.length > 0) {
+                        for (const hiddenTypeObj of allHiddenKeywords) {
+                            const matchedHiddenKeywords = hiddenTypeObj.keywords.filter(keyword => text.includes(keyword.toLowerCase()));
+                            if (matchedHiddenKeywords.length > 0) {
+                                const hiddenKeywordScore = 30;
+                                if (!recommendation.hiddenType) recommendation.hiddenType = hiddenTypeObj.type;
+                                matchedHiddenKeywords.forEach(keyword => {
+                                    if (!recommendation.matchedKeywords.some(mk => mk.keyword.toLowerCase() === keyword.toLowerCase())) {
+                                        recommendation.score += hiddenKeywordScore;
+                                        recommendation.matchedKeywords.push({ keyword: keyword, score: hiddenKeywordScore, type: 'hidden' });
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    if (recommendation.hiddenType === null && hasComplaintKeyword) {
+                        const otherScore = 10;
+                        recommendation.score += otherScore;
+                        recommendation.hiddenType = '기타';
+                        recommendation.matchedKeywords.push({ keyword: '기타', score: otherScore, type: 'hidden' });
+                    }
+                });
+            }
+            
+            const finalSortedRecommendations = recommendations.sort((a, b) => b.score - a.score);
+
+            if (finalSortedRecommendations.length > 0 && finalSortedRecommendations[0].score > 0) {
+                const top3 = finalSortedRecommendations.slice(0, 3);
+                document.getElementById('top5Block').style.display = 'block';
+
+                top3.forEach((item, index) => {
+                    const tr = document.createElement('tr');
+                    tr.className = index === 0 ? 'top5-row rank-1' : 'top5-row';
+                    
+                    const hiddenBadge = item.hiddenType ? `<span class="hidden-badge">(${item.hiddenType})</span>` : '';
+                    
+                    const matchedDetails = item.matchedKeywords.map(k => `${k.keyword}(${k.score.toFixed(0)})`).join(', ');
+
+                    tr.innerHTML = `
+                        <td align="center">${index + 1}위</td>
+                        <td>
+                            <div class="breadcrumb">
+                                <b>${item.mainType}</b>
+                                <span class="sep">></span>
+                                <span>${item.subType}</span>
+                                ${hiddenBadge}
+                            </div>
+                            <div class="score-tooltip">상세 점수: ${matchedDetails}</div>
+                        </td>
+                        <td class="score-num">${item.score.toFixed(0)}</td>
+                    `;
+                    top5Container.appendChild(tr);
                 });
             } else {
-                alert('설치를 지원하지 않는 환경입니다.');
+                document.getElementById('top5Block').style.display = 'none';
             }
-        });
 
-        cancelInstall.addEventListener('click', () => {
-            installPopup.style.display = 'none';
-            deferredPrompt = null;
-        });
+            groupedRecommendations.innerHTML = '';
+            const mainCategories = [...new Set(data.types.map(item => item.mainType))].sort();
+            const grouped = finalSortedRecommendations.reduce((acc, item) => {
+                if (!acc[item.mainType]) acc[item.mainType] = [];
+                acc[item.mainType].push(item);
+                return acc;
+            }, {});
 
-        // ✅ service worker 등록 (유지)
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(() => console.log('✅ Service Worker 등록 완료'))
-                .catch(err => console.error('❌ Service Worker 등록 실패:', err));
+            const gridContainer = document.createElement('div');
+            gridContainer.className = 'cat-grid';
+            groupedRecommendations.appendChild(gridContainer);
+            
+            const subArea = document.createElement('div');
+            groupedRecommendations.appendChild(subArea);
+
+            let subCatWrappers = {};
+
+            mainCategories.forEach(mainType => {
+                const catBtn = document.createElement('div');
+                const hasScore = grouped[mainType] && grouped[mainType].some(item => item.score > 0);
+                
+                catBtn.className = `cat-btn ${hasScore ? 'highlighted' : ''} ${selectedMainType === mainType ? 'selected' : ''}`;
+                catBtn.innerHTML = `<div>${mainType}</div>`;
+                gridContainer.appendChild(catBtn);
+
+                const subWrapper = document.createElement('div');
+                subWrapper.className = 'sub-cat-wrapper';
+                if(selectedMainType === mainType) subWrapper.style.display = 'block';
+                
+                data.types.filter(item => item.mainType === mainType).forEach(fullType => {
+                    const scoredItem = finalSortedRecommendations.find(item => item.mainType === fullType.mainType && item.subType === fullType.subType);
+                    const score = (scoredItem && scoredItem.score > 0) ? scoredItem.score.toFixed(0) : 0;
+                    
+                    const row = document.createElement('div');
+                    row.className = `sub-cat-row ${score > 0 ? 'active' : ''}`;
+                    row.innerHTML = `
+                        <span>${fullType.subType}</span>
+                        <span class="sub-cat-score ${score > 0 ? '' : 'zero'}">${score}</span>
+                    `;
+                    subWrapper.appendChild(row);
+                });
+                
+                subArea.appendChild(subWrapper);
+                subCatWrappers[mainType] = subWrapper;
+
+                catBtn.addEventListener('click', () => {
+                    const isClickedAgain = mainType === selectedMainType;
+                    
+                    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+                    document.querySelectorAll('.sub-cat-wrapper').forEach(w => w.style.display = 'none');
+
+                    if (isClickedAgain) {
+                        selectedMainType = null;
+                    } else {
+                        selectedMainType = mainType;
+                        catBtn.classList.add('selected');
+                        subCatWrappers[mainType].style.display = 'block';
+                    }
+                });
+            });
+
+            if (!inputArea.textContent.trim()) {
+                groupedRecommendations.innerHTML = `
+                    <div class="empty-placeholder">
+                        <span class="material-icons-sharp" style="font-size:48px; color:#D5D8DC;">assignment_turned_in</span>
+                        <br><br>
+                        텍스트 분석 후<br>최적의 상담 유형을 표시합니다.
+                    </div>`;
+            }
         }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            processInput();
+            // PWA Logic
+            let deferredPrompt;
+            const installPopup = document.getElementById('installPopup');
+            window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installPopup.style.display = 'block'; });
+            document.getElementById('confirmInstall').addEventListener('click', () => {
+                installPopup.style.display = 'none';
+                if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
+            });
+            document.getElementById('cancelInstall').addEventListener('click', () => installPopup.style.display = 'none');
+            if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js').catch(() => {});
+        });
     </script>
 </body>
 </html>

@@ -618,14 +618,14 @@
         CHUNJAE EDUCATION INC. INTERNAL USE ONLY.
     </div>
 
-    <div id="installPopup">
-        <div style="font-weight:700; margin-bottom:8px;">📱 모바일 앱 설치</div>
-        <div style="font-size:0.85rem; margin-bottom:12px;">밀크T VOC 시스템을 앱으로 설치하시겠습니까?</div>
-        <div style="text-align:right;">
-            <button id="cancelInstall" style="background:transparent; border:1px solid #fff;">닫기</button>
-            <button id="confirmInstall">설치</button>
-        </div>
+<div id="installPopup">
+    <div style="font-weight:700; margin-bottom:8px;">📱 모바일 앱 설치</div>
+    <div style="font-size:0.85rem; margin-bottom:12px;">밀크T VOC 시스템을 앱으로 설치하시겠습니까?</div>
+    <div style="text-align:right;">
+        <button id="cancelInstall">닫기</button>
+        <button id="confirmInstall">설치</button>
     </div>
+</div>
 
     <script>
         // =========================================================
@@ -669,6 +669,12 @@
             "최악": "매우 강한 부정 평가로, 불만 강도가 높습니다.",
             "법적대응": "법적 절차를 진행하겠다는 의사 표현입니다."
         };
+
+// ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        // [데이터 관리 구역] 
+        // 엑셀에서 데이터를 수정한 후, 변환된 코드를 이 곳에 덮어쓰기 하세요.
+        // const data = { ... }; 이 전체 덩어리를 교체하면 됩니다.
+        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
 
         const data = {
             "weights": { "superMainKeywordWeight": 50, "mainKeywordWeight": 15, "generalKeywordBonus": 5 },
@@ -826,6 +832,10 @@
                 { "mainType": "가입/체험관련", "subType": "무료체험취소요청", "superMainKeywords": ["무료체험취소"], "mainKeywords": ["무료체험"], "generalKeywords": ["취소", "요청", "체험"] }
             ]
         };
+
+// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+        // [데이터 관리 구역 끝]
+        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
         const parsedData = data.types.map(type => ({
             ...type,

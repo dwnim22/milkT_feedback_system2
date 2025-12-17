@@ -52,7 +52,7 @@
         header {
             height: var(--header-height);
             background-color: var(--brand-dark);
-            border-bottom: 4px solid var(--brand-secondary);
+            border-bottom: 4px solid var(--brand-secondary); /* 밀크T 컬러 포인트 라인 */
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -71,6 +71,7 @@
             letter-spacing: -0.5px;
         }
 
+        /* 밀크T 'T' 로고 형상화 */
         .logo-symbol {
             width: 32px;
             height: 32px;
@@ -82,6 +83,7 @@
             font-weight: 900;
             font-size: 1.4rem;
             font-family: sans-serif;
+            /* 직각 디자인 */
             border-radius: 0; 
         }
 
@@ -101,7 +103,7 @@
             text-transform: uppercase;
         }
 
-        /* --- 2. Main Layout --- */
+        /* --- 2. Main Layout (Grid System) --- */
         .layout-wrapper {
             display: flex;
             height: calc(100vh - var(--header-height));
@@ -110,22 +112,24 @@
             gap: 16px;
         }
 
+        /* 공통 패널 스타일: 직각, 명확한 테두리 */
         .panel {
             background: var(--ui-surface);
             border: 1px solid var(--line-strong);
             display: flex;
             flex-direction: column;
+            /* 그림자 제거, 플랫한 느낌 */
             box-shadow: none; 
         }
 
         /* --- 좌측: 에디터 영역 --- */
         .left-panel {
-            flex: 5;
+            flex: 5; /* 50% */
             min-width: 400px;
         }
 
         .panel-header {
-            background: #F4F6F7;
+            background: #F4F6F7; /* 옅은 회색 헤더 */
             padding: 12px 16px;
             border-bottom: 1px solid var(--line-strong);
             font-weight: 700;
@@ -136,6 +140,7 @@
             font-size: 0.95rem;
         }
         
+        /* 제목 앞의 장식용 바 */
         .panel-header::before {
             content: '';
             display: block;
@@ -169,6 +174,7 @@
             gap: 4px;
         }
 
+        /* 입력창: 문서 서식 느낌 */
         .input-area {
             flex: 1;
             width: 100%;
@@ -180,15 +186,17 @@
             resize: none;
             background-color: #FAFAFA;
             color: #000;
+            /* 직각 테두리 */
             border-radius: 0; 
         }
 
         .input-area:focus {
             background-color: #fff;
             border-color: var(--brand-primary);
-            box-shadow: inset 3px 0 0 var(--brand-primary);
+            box-shadow: inset 3px 0 0 var(--brand-primary); /* 좌측 포커스 라인 */
         }
 
+        /* 불만 키워드 하이라이트 */
         .highlight-complaint {
             color: var(--state-danger);
             font-weight: 900;
@@ -199,7 +207,7 @@
 
         /* --- 우측: 분석 대시보드 --- */
         .right-panel {
-            flex: 5;
+            flex: 5; /* 50% */
             display: flex;
             flex-direction: column;
             gap: 16px;
@@ -207,6 +215,7 @@
             border: none;
         }
 
+        /* 상단: 상태 모니터링 패널 */
         .status-panel {
             flex: 0 0 auto;
             background: var(--ui-surface);
@@ -230,6 +239,7 @@
             font-weight: 700;
             font-size: 1rem;
             border: 1px solid;
+            /* 직각 */
             border-radius: 0;
             text-transform: uppercase;
         }
@@ -250,7 +260,7 @@
             margin-top: 12px;
             padding-top: 12px;
             border-top: 1px dashed var(--line-strong);
-            display: none;
+            display: none; /* JS 제어 */
         }
         
         .keyword-label {
@@ -289,6 +299,7 @@
             display: none;
         }
 
+        /* 하단: 추천 시스템 패널 */
         .recommendation-panel {
             flex: 1;
             background: var(--ui-surface);
@@ -304,6 +315,7 @@
             flex: 1;
         }
 
+        /* TOP 5 리스트 (표 형태) */
         .top5-table {
             width: 100%;
             border-collapse: collapse;
@@ -316,7 +328,7 @@
             border: 1px solid var(--line-light);
             font-size: 0.9rem;
             text-align: left;
-            position: relative;
+            position: relative; /* 툴팁 위치 기준점 */
         }
         
         .top5-table th {
@@ -334,7 +346,7 @@
             background: #F4F6F7;
         }
         .top5-row.rank-1 {
-            background: #EBF5FB;
+            background: #EBF5FB; /* 천재 블루의 아주 옅은 톤 */
             font-weight: 700;
         }
         .top5-row.rank-1 td {
@@ -349,12 +361,13 @@
             text-align: right;
         }
 
+        /* [요청반영 2] 상세 점수 팝업 (Tooltip) 스타일 */
         .score-tooltip {
             display: none;
             position: absolute;
-            top: 40px;
+            top: 40px; /* 행 바로 아래 */
             left: 10px;
-            background: #eef4f8;
+            background: #eef4f8; /* 첨부된 이미지와 유사한 연한 하늘색 */
             border: 1px solid #0085CA;
             padding: 8px 12px;
             z-index: 100;
@@ -364,7 +377,7 @@
             border-radius: 4px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             white-space: nowrap;
-            pointer-events: none;
+            pointer-events: none; /* 팝업이 마우스 이벤트를 방해하지 않도록 */
         }
         
         .score-tooltip::before {
@@ -377,15 +390,18 @@
             border-color: transparent transparent #0085CA transparent;
         }
 
+        /* 마우스 오버 시 팝업 표시 */
         .top5-row:hover .score-tooltip {
             display: block;
         }
 
+
+        /* 카테고리 그리드 (버튼 형태) */
         .cat-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1px;
-            background: var(--line-light);
+            background: var(--line-light); /* 그리드 라인 효과 */
             border: 1px solid var(--line-light);
         }
 
@@ -420,6 +436,7 @@
             font-weight: 700;
         }
 
+        /* 서브 카테고리 (리스트) */
         .sub-cat-wrapper {
             margin-top: 16px;
             border: 1px solid var(--line-strong);
@@ -433,6 +450,7 @@
             padding: 10px 16px;
             border-bottom: 1px solid var(--line-light);
             font-size: 0.9rem;
+            /* [요청반영 1] 텍스트 색상을 진한 네이비/블랙으로 변경하여 위 버튼과 차별화 */
             color: #1A2B45; 
         }
         .sub-cat-row:last-child { border-bottom: none; }
@@ -442,17 +460,19 @@
             font-weight: 700;
         }
 
+        /* [요청반영 1] 점수 부분 색상 강조 */
         .sub-cat-score {
             font-family: 'Consolas', monospace;
             font-weight: 700;
-            color: var(--brand-primary);
+            color: #2d2828
         }
         
         .sub-cat-score.zero {
-            color: #D5D8DC;
+            color: #D5D8DC; /* 0점은 회색 */
             font-weight: 400;
         }
 
+        /* --- Utility --- */
         .empty-placeholder {
             text-align: center;
             padding: 40px;
@@ -471,47 +491,34 @@
             gap: 8px;
         }
 
+        /* JS Helper Classes */
         .hidden-badge { color: var(--state-danger); font-weight: 900; margin-left: 4px; }
         .breadcrumb { display: flex; align-items: center; gap: 4px; }
         .sep { color: var(--line-strong); font-size: 0.8rem; }
 
-        /* [요청반영 1] 설치 팝업 스타일 (원본 스타일 복구) */
+        /* PWA 팝업 */
         #installPopup {
-            display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border: 2px solid var(--brand-primary);
-            border-radius: 12px;
+            bottom: 0;
+            right: 0;
+            margin: 20px;
+            background: var(--brand-dark);
+            color: white;
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            z-index: 9999;
-            text-align: center;
             width: 300px;
-        }
-        #installPopup p {
-            margin-top: 0;
-            color: var(--text-main);
-            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid var(--brand-secondary);
+            display: none;
+            z-index: 999;
         }
         #installPopup button {
-            margin: 5px;
-            padding: 8px 16px;
+            background: var(--brand-secondary);
+            color: var(--brand-dark);
             border: none;
-            border-radius: 6px;
+            padding: 6px 12px;
+            font-weight: 700;
             cursor: pointer;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 500;
-        }
-        #confirmInstall {
-            background: var(--brand-primary);
-            color: white;
-        }
-        #cancelInstall {
-            background: #ccc;
-            color: #333;
+            margin-left: 8px;
         }
 
         @media (max-width: 1024px) {
@@ -526,11 +533,11 @@
     <header>
         <div class="brand-logo">
             <div class="logo-symbol">T</div>
-            <span style="margin-left:8px;">Genius VOC System</span>
+            <span style="margin-left:8px;">밀크T 실시간 상담 가이드 (AI Insights)</span>
         </div>
         <div class="user-info">
             <span class="material-icons-sharp" style="font-size:18px;">support_agent</span>
-            <span>고객상담팀 | 김천재 매니저</span>
+            <span>고객상담팀</span>
             <span class="user-tag">ADMIN</span>
         </div>
     </header>
@@ -612,16 +619,17 @@
     </div>
 
     <div id="installPopup">
-        <p style="font-size:1.1em; margin-bottom:15px;">📲 이 앱을 설치하시겠습니까?</p>
-        <button id="confirmInstall">설치</button>
-        <button id="cancelInstall">취소</button>
+        <div style="font-weight:700; margin-bottom:8px;">📱 모바일 앱 설치</div>
+        <div style="font-size:0.85rem; margin-bottom:12px;">밀크T VOC 시스템을 앱으로 설치하시겠습니까?</div>
+        <div style="text-align:right;">
+            <button id="cancelInstall" style="background:transparent; border:1px solid #fff;">닫기</button>
+            <button id="confirmInstall">설치</button>
+        </div>
     </div>
-
-    <script src="data.js"></script>
 
     <script>
         // =========================================================
-        //  [로직] data 객체는 data.js에서 불러오므로 여기서는 선언하지 않습니다.
+        //  [기능 유지] 로직은 이전과 100% 동일, UI 렌더링 방식만 변경
         // =========================================================
 
         const inputArea = document.getElementById('inputArea');
@@ -662,7 +670,162 @@
             "법적대응": "법적 절차를 진행하겠다는 의사 표현입니다."
         };
 
-        // data 변수는 data.js에서 로드됨
+        const data = {
+            "weights": { "superMainKeywordWeight": 50, "mainKeywordWeight": 15, "generalKeywordBonus": 5 },
+            "commonHiddenKeywords": {
+                "교사관련": [
+                    { "keywords": ["안내미흡", "설명부족", "안내오류", "안내실수", "정보누락", "소통문제", "잘못 알려줌", "전달오류", "오안내"], "type": "안내미흡" },
+                    { "keywords": ["연락어려움", "연락불가", "연락두절", "전화불통", "통화실패", "응답없음", "연락지연", "연락안됨", "연락안되어"], "type": "연락어려움" },
+                    { "keywords": ["관리불만", "관리미흡", "학생방치", "관리부재", "학습관리불만", "학습불만"], "type": "관리불만" },
+                    { "keywords": ["응대불만", "교사불친절", "불쾌한응대", "반말사용", "고압적태도", "소리지름", "감정적대응", "성의없는응대"], "type": "응대불만" },
+                    { "keywords": ["처리지연", "처리누락", "응답지연", "피드백지연", "연락지연", "정보누락", "업무미처리"], "type": "처리지연및누락" },
+                    { "keywords": ["관리자불만", "책임회피", "대응부족", "처리불만"], "type": "관리자불만" }
+                ],
+                "원격요청": [
+                    { "keywords": ["환경"], "type": "고객환경(S/W)" },
+                    { "keywords": ["멈춤", "렉", "멈춰", "멈추는", "끊겨", "끊기는"], "type": "멈춤현상(S/W)" },
+                    { "keywords": ["충전", "방전"], "type": "충전및방전(H/W)" },
+                    { "keywords": ["터치", "터치안됨", "터치불량"], "type": "터치불량(H/W)" },
+                    { "keywords": ["화면", "액정", "디스플레이"], "type": "화면이상(H/W)" },
+                    { "keywords": ["소리", "사운드"], "type": "소리이상(H/W)" },
+                    { "keywords": ["금액", "비용", "비싸"], "type": "금액불만(H/W)" },
+                    { "keywords": ["사양", "성능"], "type": "기기사양(H/W)" },
+                    { "keywords": ["체험기기다름", "체험기다름"], "type": "체험기다름(H/W)" },
+                    { "keywords": ["초기", "초기상태"], "type": "기기초기상태불만(H/W)" }
+                ],
+                "결제관련": [
+                    { "keywords": ["처리지연", "처리누락", "지연", "누락"], "type": "처리지연및누락" },
+                    { "keywords": ["규정", "정책"], "type": "규정불만" },
+                    { "keywords": ["미납서류"], "type": "미납관련서류수령" },
+                    { "keywords": ["미납안내"], "type": "미납안내불만" },
+                    { "keywords": ["결제방법", "결제하는법"], "type": "결제방법불만" },
+                    { "keywords": ["미납", "미납중지"], "type": "미납중지불만" }
+                ],
+                "기기사용관련": [
+                    { "keywords": ["환경"], "type": "고객환경(S/W)" },
+                    { "keywords": ["멈춤", "렉", "멈춰", "멈추는", "끊겨", "끊기는"], "type": "멈춤현상(S/W)" },
+                    { "keywords": ["충전", "방전"], "type": "충전및방전(H/W)" },
+                    { "keywords": ["터치", "터치안됨", "터치불량"], "type": "터치불량(H/W)" },
+                    { "keywords": ["화면", "액정", "디스플레이"], "type": "화면이상(H/W)" },
+                    { "keywords": ["소리", "사운드"], "type": "소리이상(H/W)" },
+                    { "keywords": ["금액", "비용", "비싸"], "type": "금액불만(H/W)" },
+                    { "keywords": ["사양", "성능"], "type": "기기사양(H/W)" },
+                    { "keywords": ["체험기기다름", "체험기다름"], "type": "체험기다름(H/W)" },
+                    { "keywords": ["초기", "초기상태"], "type": "기기초기상태불만(H/W)" },
+                    { "keywords": ["규정", "정책"], "type": "규정불만" }
+                ],
+                "AS관련": [
+                    { "keywords": ["환경"], "type": "기기AS규정불만" },
+                    { "keywords": ["멈춤", "렉", "멈춰", "멈추는", "끊겨", "끊기는"], "type": "AS비용불만" },
+                    { "keywords": ["충전", "방전"], "type": "처리지연및누락" },
+                    { "keywords": ["터치", "터치안됨", "터치불량"], "type": "구성품AS불만" }
+                ]
+            },
+            "types": [
+                { "mainType": "교사관련", "subType": "관리교사", "superMainKeywords": [], "mainKeywords": ["관리교사","관리선생님"], "generalKeywords": ["교사", "선생", "관리"], "hiddenKeywordRef": "교사관련" },
+                { "mainType": "교사관련", "subType": "상담교사", "superMainKeywords": [], "mainKeywords": ["상담교사","상담선생님"], "generalKeywords": ["교사", "선생", "상담"], "hiddenKeywordRef": "교사관련" },
+                { "mainType": "교사관련", "subType": "지사(홍보)교사", "superMainKeywords": [], "mainKeywords": ["홍보교사", "지사교사"], "generalKeywords": ["교사", "선생", "지사", "홍보"], "hiddenKeywordRef": "교사관련" },
+                { "mainType": "원격요청", "subType": "구성품", "superMainKeywords": ["원격점검","예약시간"], "mainKeywords": ["구성품","예약"], "generalKeywords": ["키보드", "펜"], "hiddenKeywordRef": "원격요청" },
+                { "mainType": "원격요청", "subType": "학습기기", "superMainKeywords": ["원격점검","예약시간"], "mainKeywords": ["기기","예약"], "generalKeywords": [], "hiddenKeywordRef": "원격요청" },
+                { "mainType": "원격요청", "subType": "학습환경", "superMainKeywords": ["원격점검","예약시간"], "mainKeywords": ["환경","예약"], "generalKeywords": ["와이파이", "WIFI"], "hiddenKeywordRef": "원격요청" },
+                { "mainType": "원격요청", "subType": "예약확인/변경/취소", "superMainKeywords": ["원격점검","예약시간"], "mainKeywords": ["예약","취소","변경","확인"], "generalKeywords": ["예약"], "hiddenKeywordRef": "원격요청" },
+                { "mainType": "원격요청", "subType": "프리패스원격", "superMainKeywords": ["원격점검","예약시간"], "mainKeywords": ["프리패스","예약"], "generalKeywords": [], "hiddenKeywordRef": "원격요청" },
+                { "mainType": "결제관련", "subType": "결제요청및변경", "superMainKeywords": ["결제요청","결제변경"], "mainKeywords": ["결제","카드"], "generalKeywords": ["요청", "변경", "즉시", "계좌"], "hiddenKeywordRef": "결제관련" },
+                { "mainType": "결제관련", "subType": "결제확인", "superMainKeywords": ["결제확인"], "mainKeywords": ["결제","카드"], "generalKeywords": ["확인", "문의", "증명"], "hiddenKeywordRef": "결제관련" },
+                { "mainType": "결제관련", "subType": "결제오류", "superMainKeywords": ["결제오류"], "mainKeywords": ["결제","카드"], "generalKeywords": ["오류", "이중결제"], "hiddenKeywordRef": "결제관련" },
+                { "mainType": "기기사용관련", "subType": "WIFI및설치", "superMainKeywords": ["와이파이","WIFI"], "mainKeywords": [], "generalKeywords": ["기기", "WIFI", "공유기", "핫스팟"], "hiddenKeywordRef": "기기사용관련" },
+                { "mainType": "기기사용관련", "subType": "구성품관련", "superMainKeywords": ["구성품"], "mainKeywords": [], "generalKeywords": ["기기", "키보드", "펜"], "hiddenKeywordRef": "기기사용관련", "exceptionHiddenKeywords": [ {"keywords": ["안전사고", "화재위험", "과열현상", "감전위험", "안전관리미흡", "부상위험"], "type": "안전사고관련"} ] },
+                { "mainType": "기기사용관련", "subType": "기기인증초기화", "superMainKeywords": ["기기인증","기기인증초기화"], "mainKeywords": ["인증"], "generalKeywords": ["기기", "로그인", "초기화"], "hiddenKeywordRef": "기기사용관련" },
+                { "mainType": "기기사용관련", "subType": "학습기기관련", "superMainKeywords": ["학습기기"], "mainKeywords": ["기기"], "generalKeywords": ["문의", "업데이트", "최적화"], "hiddenKeywordRef": "기기사용관련", "exceptionHiddenKeywords": [ {"keywords": ["안전사고", "화재위험", "과열현상", "감전위험", "안전관리미흡", "부상위험"], "type": "안전사고관련"} ] },
+                { "mainType": "기기사용관련", "subType": "공장초기화", "superMainKeywords": ["공장초기화","기기초기화"], "mainKeywords": [], "generalKeywords": ["기기", "초기화"], "exceptionHiddenKeywords": [ {"keywords": ["규정", "정책"], "type": "규정불만"} ], "weights": { "superMainKeywordWeight": 60, "mainKeywordWeight": 20, "generalKeywordBonus": 5 } },
+                { "mainType": "AS관련", "subType": "AS대행및발송", "superMainKeywords": ["AS대행"], "mainKeywords": ["AS", "대행"], "generalKeywords": ["대체기기", "회수"] },
+                { "mainType": "AS관련", "subType": "구성품AS", "superMainKeywords": ["구성품AS"], "mainKeywords": ["AS"], "generalKeywords": ["구성품", "키보드", "펜"] },
+                { "mainType": "AS관련", "subType": "AS관련취소", "superMainKeywords": ["AS취소","AS대행취소"], "mainKeywords": ["AS"], "generalKeywords": ["대행", "취소"] },
+                { "mainType": "AS관련", "subType": "불량판정서기기교체", "superMainKeywords": ["불량판정서"], "mainKeywords": ["판정서"], "generalKeywords": ["AS", "불량", "팩스"] },
+                { "mainType": "AS관련", "subType": "삼성AS센터관련", "superMainKeywords": ["삼성"], "mainKeywords": ["센터","서비스센터"], "generalKeywords": ["AS", "확인서"] },
+                { "mainType": "AS관련", "subType": "기기AS관련", "superMainKeywords": [], "mainKeywords": ["AS","발열","수리"], "generalKeywords": ["기기", "점검"] },
+                { "mainType": "개인정보관련", "subType": "ID/비번문의", "superMainKeywords": ["개인정보"], "mainKeywords": ["아이디", "비밀번호"], "generalKeywords": ["ID", "비번", "암호", "패스워드"] },
+                { "mainType": "개인정보관련", "subType": "정보확인및변경", "superMainKeywords": ["개인정보"], "mainKeywords": ["확인", "변경"], "generalKeywords": ["주소", "연락처", "번호"] },
+                { "mainType": "개인정보관련", "subType": "계정생성관련", "superMainKeywords": ["개인정보"], "mainKeywords": ["계정", "생성"], "generalKeywords": ["아이디", "ID", "로그인"] },
+                { "mainType": "개인정보관련", "subType": "탈퇴문의", "superMainKeywords": ["탈퇴","개인정보"], "mainKeywords": ["삭제"], "generalKeywords": ["개인정보"] },
+                { "mainType": "개인정보관련", "subType": "동의정보/수신거부", "superMainKeywords": ["동의정보","정보동의","수신거부","개인정보"], "mainKeywords": ["동의", "거부","삭제"], "generalKeywords": ["개인정보", "탈퇴", "마케팅"] },
+                { "mainType": "장애관련", "subType": "장애재인입", "superMainKeywords": ["장애재인입"], "mainKeywords": ["장애"], "generalKeywords": ["오류", "재인입"] },
+                { "mainType": "장애관련", "subType": "서버장애", "superMainKeywords": ["서버장애"], "mainKeywords": ["장애"], "generalKeywords": ["오류", "서버"] },
+                { "mainType": "장애관련", "subType": "런처장애", "superMainKeywords": ["런처장애"], "mainKeywords": ["장애"], "generalKeywords": ["오류", "런처"] },
+                { "mainType": "장애관련", "subType": "기타서비스장애", "superMainKeywords": ["서비스장애"], "mainKeywords": ["장애"], "generalKeywords": ["오류", "서비스"] },
+                { "mainType": "장애관련", "subType": "타학교급장애", "superMainKeywords": ["타학교급장애"], "mainKeywords": ["장애"], "generalKeywords": ["오류", "타학교"] },
+                { "mainType": "이벤트관련", "subType": "학습이벤트", "superMainKeywords": ["학습이벤트"], "mainKeywords": ["이벤트"], "generalKeywords": ["학습", "설명회"] },
+                { "mainType": "이벤트관련", "subType": "가입및체험이벤트", "superMainKeywords": ["가입이벤트","체험이벤트"], "mainKeywords": ["이벤트","체험"], "generalKeywords": ["가입","상품권", "혜택"] },
+                { "mainType": "이벤트관련", "subType": "친구추천", "superMainKeywords": ["친구추천"], "mainKeywords": ["이벤트"], "generalKeywords": ["친구", "지인", "추천", "상품권"] },
+                { "mainType": "기타", "subType": "기문의OUT콜", "superMainKeywords": ["기문의OUT"], "mainKeywords": [], "generalKeywords": ["아웃"] },
+                { "mainType": "기타", "subType": "타학교급인입", "superMainKeywords": ["타학교"], "mainKeywords": [], "generalKeywords": ["아이", "초등", "중고등", "인입"] },
+                { "mainType": "기타", "subType": "그룹사서비스", "superMainKeywords": ["그룹사"], "mainKeywords": [], "generalKeywords": ["교과서"] },
+                { "mainType": "기타", "subType": "마케팅/제휴/홍보", "superMainKeywords": [], "mainKeywords": ["제휴", "마케팅", "홍보"], "generalKeywords": ["광고"] },
+                { "mainType": "기타", "subType": "단선/오인입/연락요청", "superMainKeywords": ["단선", "오인입","연락요청"], "mainKeywords": [], "generalKeywords": ["오인입","미확인"] },
+                { "mainType": "기타", "subType": "타부서업무문의", "superMainKeywords": ["타부서"], "mainKeywords": [], "generalKeywords": ["공모전"] },
+                { "mainType": "기타", "subType": "상담오등록", "superMainKeywords": ["오등록"], "mainKeywords": [], "generalKeywords": ["상담"] },
+                { "mainType": "기타", "subType": "이전상담사이관", "superMainKeywords": ["이전상담사"], "mainKeywords": [], "generalKeywords": ["상담사", "요청", "전달"] },
+                { "mainType": "기타", "subType": "고객센터관련", "superMainKeywords": ["고객센터"], "mainKeywords": [], "generalKeywords": [] },
+                { "mainType": "기타", "subType": "(원격)부재", "superMainKeywords": ["원격부재"], "mainKeywords": ["부재"], "generalKeywords": [] },
+                { "mainType": "기타", "subType": "(원격)원격중", "superMainKeywords": ["원격중"], "mainKeywords": ["원격중"], "generalKeywords": [] },
+                { "mainType": "기타", "subType": "밀크T아이(런처)", "superMainKeywords": [], "mainKeywords": ["런처"], "generalKeywords": ["밀크T아이"] },
+                { "mainType": "기타", "subType": "응대불가(욕설)", "superMainKeywords": ["응대불가", "욕설"], "mainKeywords": [], "generalKeywords": [], "hiddenKeywords": [ { "keywords": ["막말", "싸가지", "개소리"], "type": "비속어" } ] },
+                { "mainType": "화상코치", "subType": "시간문의및변경", "superMainKeywords": [], "mainKeywords": ["맞춤톡쌤", "화상"], "generalKeywords": ["시간", "문의"] },
+                { "mainType": "화상코치", "subType": "입장방법및오류", "superMainKeywords": ["입장방법","입장오류"], "mainKeywords": ["화상"], "generalKeywords": ["초대"] },
+                { "mainType": "화상코치", "subType": "참여불가", "superMainKeywords": ["참여불가"], "mainKeywords": ["화상", "참여"], "generalKeywords": ["불가", "무관리"] },
+                { "mainType": "배송관련", "subType": "기기및구성품배송", "superMainKeywords": [], "mainKeywords": ["배송", "기기"], "generalKeywords": ["체험기기"] },
+                { "mainType": "배송관련", "subType": "전용교재배송", "superMainKeywords": ["전용교재"], "mainKeywords": ["배송", "교재"], "generalKeywords": ["배송"] },
+                { "mainType": "배송관련", "subType": "판촉물배송", "superMainKeywords": ["판촉물배송"], "mainKeywords": ["배송", "판촉물"], "generalKeywords": ["사은품"] },
+                { "mainType": "배송관련", "subType": "이벤트상품배송", "superMainKeywords": ["이벤트상품"], "mainKeywords": ["배송", "이벤트"], "generalKeywords": ["카메라", "상품"] },
+                { "mainType": "회수관련", "subType": "회수요청", "superMainKeywords": ["회수요청"], "mainKeywords": ["회수"], "generalKeywords": ["체험기기", "기기"] },
+                { "mainType": "회수관련", "subType": "회수중복및지연", "superMainKeywords": ["회수중복","회수지연"], "mainKeywords": ["회수"], "generalKeywords": ["중복", "지연"] },
+                { "mainType": "회수관련", "subType": "회수일반문의", "superMainKeywords": [], "mainKeywords": ["회수"], "generalKeywords": ["문의"] },
+                { "mainType": "회수관련", "subType": "회수정보변경", "superMainKeywords": ["회수정보","회수정보변경"], "mainKeywords": ["회수"], "generalKeywords": ["회수지", "주소지", "번호", "주소"] },
+                { "mainType": "취소/환불관련", "subType": "문의-처리진행상황", "superMainKeywords": ["처리진행상황","진행상황"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "처리", "상황"] },
+                { "mainType": "취소/환불관련", "subType": "문의-학습거부/시간부족", "superMainKeywords": ["학습거부","시간부족"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "시간"] },
+                { "mainType": "취소/환불관련", "subType": "문의-개인사정", "superMainKeywords": ["개인사정"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "사정"] },
+                { "mainType": "취소/환불관련", "subType": "문의-학습변경(온라인)", "superMainKeywords": [], "mainKeywords": ["해지","학습변경"], "generalKeywords": ["취소", "환불", "문의", "변경"] },
+                { "mainType": "취소/환불관련", "subType": "문의-학습변경(오프라인)", "superMainKeywords": [], "mainKeywords": ["해지","학습변경"], "generalKeywords": ["취소", "환불", "문의", "변경"] },
+                { "mainType": "취소/환불관련", "subType": "문의-콘텐츠/서비스", "superMainKeywords": [], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "콘텐츠", "서비스"] },
+                { "mainType": "취소/환불관련", "subType": "문의-학습전용기기", "superMainKeywords": [], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "기기","학습전용기기"] },
+                { "mainType": "취소/환불관련", "subType": "문의-효과없음", "superMainKeywords": ["효과없음"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "효과"] },
+                { "mainType": "취소/환불관련", "subType": "문의-관리(자기주도)", "superMainKeywords": ["자기주도"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "관리", "자기주도"] },
+                { "mainType": "취소/환불관련", "subType": "문의-기타", "superMainKeywords": [], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의"] },
+                { "mainType": "취소/환불관련", "subType": "요청-학습거부/시간부족", "superMainKeywords": ["학습거부","시간부족"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청", "거부", "시간"] },
+                { "mainType": "취소/환불관련", "subType": "요청-개인사정", "superMainKeywords": ["개인사정"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청", "사정"] },
+                { "mainType": "취소/환불관련", "subType": "요청-학습변경(온라인)", "superMainKeywords": [], "mainKeywords": ["해지","학습변경"], "generalKeywords": ["취소", "환불", "요청", "변경"] },
+                { "mainType": "취소/환불관련", "subType": "요청-학습변경(오프라인)", "superMainKeywords": [], "mainKeywords": ["해지","학습변경"], "generalKeywords": ["취소", "환불", "요청", "변경"] },
+                { "mainType": "취소/환불관련", "subType": "요청-콘텐츠/서비스", "superMainKeywords": [], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청","컨텐츠","콘텐츠", "서비스"] },
+                { "mainType": "취소/환불관련", "subType": "요청-학습전용기기", "superMainKeywords": [], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청", "기기","학습전용기기"] },
+                { "mainType": "취소/환불관련", "subType": "요청-효과없음", "superMainKeywords": ["효과없음"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청", "효과"] },
+                { "mainType": "취소/환불관련", "subType": "요청-관리(자기주도)", "superMainKeywords": ["자기주도"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청", "자기주도"] },
+                { "mainType": "취소/환불관련", "subType": "요청-기타", "superMainKeywords": [], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "요청"] },
+                { "mainType": "취소/환불관련", "subType": "문의-해지절차/금액", "superMainKeywords": ["해지절차","해지금액","해지금","해지비용","해지비"], "mainKeywords": ["해지"], "generalKeywords": ["취소", "환불", "문의", "해지", "금액", "비용"] },
+                { "mainType": "서비스관련", "subType": "양도문의", "superMainKeywords": ["양도"], "mainKeywords": [], "generalKeywords": ["형제", "동생"] },
+                { "mainType": "서비스관련", "subType": "이월문의", "superMainKeywords": ["이월"], "mainKeywords": [], "generalKeywords": [] },
+                { "mainType": "서비스관련", "subType": "티스푼/자녀등록", "superMainKeywords": ["티스푼"], "mainKeywords": ["자녀등록"], "generalKeywords": ["자녀"] },
+                { "mainType": "서비스관련", "subType": "밀크T나가기", "superMainKeywords": ["밀크티나가기","밀크T나가기"], "mainKeywords": ["밀크T", "밀크티"], "generalKeywords": ["나가기"] },
+                { "mainType": "서비스관련", "subType": "학습관련", "superMainKeywords": [], "mainKeywords": ["학습"], "generalKeywords": ["문의", "안내"] },
+                { "mainType": "서비스관련", "subType": "학습기간", "superMainKeywords": ["학습기간"], "mainKeywords": ["학습","약정","기간","만료","재연장"], "generalKeywords": ["문의"] },
+                { "mainType": "서비스관련", "subType": "쿠폰인증문의", "superMainKeywords": ["쿠폰","쿠폰인증"], "mainKeywords": [], "generalKeywords": ["지니마켓", "포인트", "상품권"] },
+                { "mainType": "서비스관련", "subType": "쉬는시간및마켓T문의", "superMainKeywords": ["컵", "쉬는시간", "지니마켓"], "mainKeywords": [], "generalKeywords": ["간식타임", "기프티콘", "컵", "CUP"] },
+                { "mainType": "서비스관련", "subType": "컨텐츠오류", "superMainKeywords": ["컨텐츠오류"], "mainKeywords": ["컨텐츠", "콘텐츠"], "generalKeywords": ["콘텐츠", "오류", "에러"] },
+                { "mainType": "서비스관련", "subType": "프리패스", "superMainKeywords": ["프리패스"], "mainKeywords": [], "generalKeywords": [] },
+                { "mainType": "서비스관련", "subType": "메타서비스", "superMainKeywords": ["메타서비스"], "mainKeywords": ["마이룸"], "generalKeywords": ["루비", "아이템"] },
+                { "mainType": "북클럽", "subType": "B 취소/환불 요청", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["해지", "환불"] },
+                { "mainType": "북클럽", "subType": "B 맛보기문의", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["체험"] },
+                { "mainType": "북클럽", "subType": "B 상품문의", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["가입", "상품"] },
+                { "mainType": "북클럽", "subType": "B 티스푼", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["티스푼"] },
+                { "mainType": "북클럽", "subType": "B 학습관련", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["학습", "문의"] },
+                { "mainType": "북클럽", "subType": "B 학습기간", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["기간", "약정"] },
+                { "mainType": "북클럽", "subType": "B 쉬는시간문의", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["쉬는시간"] },
+                { "mainType": "북클럽", "subType": "B 책놀이터문의", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["책놀이터"] },
+                { "mainType": "북클럽", "subType": "B 컨텐츠오류", "superMainKeywords": ["북클럽"], "mainKeywords": [], "generalKeywords": ["콘텐츠", "오류", "에러"] },
+                { "mainType": "가입/체험관련", "subType": "상품및가입문의", "superMainKeywords": ["가입문의","체험문의","상품문의"], "mainKeywords": [], "generalKeywords": ["가입", "문의", "상담", "체험"] },
+                { "mainType": "가입/체험관련", "subType": "무료체험문의", "superMainKeywords": ["무료체험"], "mainKeywords": ["체험문의"], "generalKeywords": ["체험"] },
+                { "mainType": "가입/체험관련", "subType": "무료체험취소요청", "superMainKeywords": ["무료체험취소"], "mainKeywords": ["무료체험"], "generalKeywords": ["취소", "요청", "체험"] }
+            ]
+        };
 
         const parsedData = data.types.map(type => ({
             ...type,
@@ -821,7 +984,7 @@
             resultBox.innerHTML = `
                 <div class="result-badge complaint">
                     <span class="material-icons-sharp">report_problem</span>
-                    <span>불만 표현 감지됨 (RISK)</span>
+                    <span>불만 표현 감지됨</span>
                 </div>
             `;
             resultBox.style.display = 'flex';
@@ -943,6 +1106,7 @@
                     
                     const hiddenBadge = item.hiddenType ? `<span class="hidden-badge">(${item.hiddenType})</span>` : '';
                     
+                    // [요청반영 2] 상세 점수 툴팁 내용 생성
                     const matchedDetails = item.matchedKeywords.map(k => `${k.keyword}(${k.score.toFixed(0)})`).join(', ');
 
                     tr.innerHTML = `
@@ -964,6 +1128,7 @@
                 document.getElementById('top5Block').style.display = 'none';
             }
 
+            // 카테고리 그리드 생성
             groupedRecommendations.innerHTML = '';
             const mainCategories = [...new Set(data.types.map(item => item.mainType))].sort();
             const grouped = finalSortedRecommendations.reduce((acc, item) => {
@@ -972,10 +1137,12 @@
                 return acc;
             }, {});
 
+            // 메인 컨테이너
             const gridContainer = document.createElement('div');
             gridContainer.className = 'cat-grid';
             groupedRecommendations.appendChild(gridContainer);
             
+            // 서브 컨테이너 (위치 홀더)
             const subArea = document.createElement('div');
             groupedRecommendations.appendChild(subArea);
 
@@ -1012,6 +1179,7 @@
                 catBtn.addEventListener('click', () => {
                     const isClickedAgain = mainType === selectedMainType;
                     
+                    // Reset ALL
                     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
                     document.querySelectorAll('.sub-cat-wrapper').forEach(w => w.style.display = 'none');
 
